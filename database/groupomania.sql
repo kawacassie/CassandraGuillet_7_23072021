@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 29 juil. 2021 à 07:23
+-- Généré le : jeu. 29 juil. 2021 à 13:27
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `user_id` int UNSIGNED NOT NULL,
   `content` varchar(255) NOT NULL,
   `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `likes` smallint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_comments`),
   KEY `user_id` (`user_id`),
   KEY `post_id` (`post_id`)
@@ -69,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `image_url` varchar(255) DEFAULT NULL,
   `post_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `likes` smallint NOT NULL DEFAULT '0',
+  `dislikes` smallint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_posts`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`)
