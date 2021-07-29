@@ -41,7 +41,7 @@ function createAdmin(req, res) {
 module.exports = createAdmin();
 
 module.exports = {
-    authentification: {
+    authentication: {
         jwtSecret: process.env.JWT_SECRET || 'secret',
     },
 };
