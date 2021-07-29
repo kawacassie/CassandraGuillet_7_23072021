@@ -67,7 +67,7 @@ exports.updateAccount = (req, res, next) => {
 // Récupérer un compte utilisateur en particulier
 exports.getOneAccount = (req, res, next) => {
     user.findOne({ _id: req.params.id })
-      .then(sauce => res.status(200).json(sauce))
+      .then(user => res.status(200).json(user))
       .catch(error => res.status(404).json({ error }));
   };
 

@@ -11,12 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Comment.init({
+        post_id: {type: DataTypes.STRING, allowNull: false},
+        user_id: { type: DataTypes.STRING, allowNull: false},
         content: { type: DataTypes.STRING, allowNull: false},
         comment_date: { type: DataTypes.STRING, allowNull: false},
-        likes: { type: DatatType.NUMBER, allowNull: false, default: 0},
-        dislikes: { type: DataTypes.NUMBER, allowNull: false, default: 0 },
-        usersLikedPost: { type: DataTypes.ARRAY },
-        usersDislikedPost: { type: DataTypes.ARRAY }
     },
     {
         sequelize,
