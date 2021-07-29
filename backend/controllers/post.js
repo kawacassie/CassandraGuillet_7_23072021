@@ -43,7 +43,7 @@ exports.modifyPost = (req, res, next) => {
 
 // Suppression d'un post
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
+    Post.findOne({ _id: req.params.id || is_admin === true })
       .then(post => {
         const filename = post.image_url.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
@@ -96,7 +96,7 @@ exports.addComment = (req, res, next) => {
 
 // Suppression d'un commentaire
 exports.deleteComment = (req, res, next) => {
-    Comment.findOne({ _id: req.params.id })
+    Comment.findOne({ _id: req.params.id || is_admin === true })
       .then(comment => {
           Comment.deleteOne({ _id: req.params.id })
             .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
