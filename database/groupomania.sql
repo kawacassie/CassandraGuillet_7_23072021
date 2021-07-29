@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 25 juil. 2021 à 09:41
+-- Généré le : jeu. 29 juil. 2021 à 07:23
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id_comments` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `post_id` int UNSIGNED NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `content` varchar(255) NOT NULL,
   `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `likes` smallint NOT NULL DEFAULT '0',
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `id_posts` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `category_id` int UNSIGNED NOT NULL,
   `title` varchar(100) NOT NULL,
   `content` text NOT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id_users` int NOT NULL AUTO_INCREMENT,
+  `id_users` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
