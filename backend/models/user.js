@@ -1,0 +1,27 @@
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+    class User extends Model {
+        static associate(models) {
+            models.User.hasMany(models.Category)
+            models.User.hasMany(models.Post);
+            models.User.hasMany(models.Comment);
+        }
+    }
+    User.init(
+        {
+            first_name: { type: DataTypes.STRING, allowNull: false },
+            last_name: { type: DataTypes.STRING, allowNull: false, unique: true },
+            email: { type: DataTypes.STRING, allowNull: false },
+            password: { type: DataTypes.STRING, allowNull: false},
+            job: { type: DataTypes.STRING, allowNull: true},
+            avatar: { type: DataTypes.STRING, allowNull: true },
+            bio: { type: DataTypes.STRING, allowNull: true },
+            is_admin: { type: DataTypes.BOOLEAN, allowNull: false, default: false},
+        },
+        {
+            sequelize,
+            modelName: 'User',
+        }
+    );
+    return User;
+};
