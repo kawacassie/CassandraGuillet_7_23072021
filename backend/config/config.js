@@ -11,10 +11,11 @@ function createAdmin(req, res) {
                     .hash('Moderateur', 10)
                     .then((hash) => {
                         const admin = database.User.create({
-                            pseudo: 'admin',
+                            first_name: 'admin',
+                            last_name: 'admin',
                             email: 'admin@mail.com',
                             password: hash, 
-                            admin: true,
+                            is_admin: true,
                         })
                             .then((admin) => {
                                 console.log({
