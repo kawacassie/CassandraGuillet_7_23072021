@@ -17,7 +17,7 @@ const databaseTest = async function () {
   } catch (error) {
     console.error('Impossible de se connecter à la base de donnée', error);
   }
-};
+}; 
 databaseTest();
 
 const app = express();

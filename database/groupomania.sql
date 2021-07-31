@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 29 juil. 2021 à 13:27
+-- Généré le : sam. 31 juil. 2021 à 18:27
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `post_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `likes` smallint NOT NULL DEFAULT '0',
-  `dislikes` smallint NOT NULL DEFAULT '0',
+  `likes` smallint DEFAULT '0',
+  `dislikes` smallint DEFAULT '0',
   PRIMARY KEY (`id_posts`),
   KEY `user_id` (`user_id`),
   KEY `category_id` (`category_id`)

@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         content: { type: DataTypes.TEXT, allowNull: false},
         image_url: { type: DataTypes.STRING, allowNull: true},
         post_date: { type: DataTypes.STRING, allowNull: false},
-        likes: { type: DatatType.NUMBER, allowNull: false, default: 0},
-        dislikes: { type: DataTypes.NUMBER, allowNull: false, default: 0 },
-        usersLiked: { type: DataTypes.ARRAY },
-        usersDisliked: { type: DataTypes.ARRAY }
+        likes: { type: DataTypes.INTEGER, allowNull: true, default: 0},
+        dislikes: { type: DataTypes.INTEGER, allowNull: true, default: 0 },
+        usersLiked: { type: DataTypes.INTEGER },
+        usersDisliked: { type: DataTypes.INTEGER }
     },
     {
         sequelize,
