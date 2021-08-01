@@ -2,7 +2,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Post extends Model {
         static associate(models) {
-            models.Post.belongsTo(models.Category, {
+            models.Post.belongsTo(models.User, {
                 foreignKey: { allowNull: false }, onDelete: 'CASCADE',
             }),
             models.Post.belongsTo(models.Category, {

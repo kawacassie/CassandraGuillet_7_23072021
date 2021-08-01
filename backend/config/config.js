@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 // Création du compte administrateur 
 
 function createAdmin(req, res) {
-    database.User.findOne({ where: { email: 'admin@mail.com' } || { pseudo : 'admin'} })
+    database.User.findOne({ where: { email: 'admin@mail.com' } || { first_name : 'admin'} })
         .then((user) => {
             if (!user) {
                 bcrypt
