@@ -1,3 +1,7 @@
+body {
+    background-image: url('../src/assets/logo.png');
+}
+
 p, span, div {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -21,6 +25,7 @@ li {
     margin: 0 10px;
 }
 
-a {
+a, i {
     color: #FD2D01;
+    padding-right: 2em;
 }
