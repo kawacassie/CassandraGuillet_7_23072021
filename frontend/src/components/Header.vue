@@ -1,3 +1,7 @@
-<template></template>
+<template>
+    <nav></nav>
+</template>
+
 <script></script>
-<style></style>
+
+<style lang="scss"></style>
