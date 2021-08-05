@@ -1,7 +1,18 @@
 <template>
-    <nav></nav>
+    <div class="container">
+        <div class="row">
+            <nav>
+                 <img src="../assets/icon-left-font-monochrome-black.svg" alt="logo Groupomania" height="40" class="m-0 p0"/>
+            </nav>
+        </div>
+    </div>
 </template>
 
-<script></script>
+<script>
+export default {
+    name: 'Header',
+}
+
+</script>
 
 <style lang="scss"></style>

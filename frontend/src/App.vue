@@ -1,44 +1,39 @@
 <template>
-  <v-app>
-    <header :user='user'>
-      <Header/>
-    </header>
-
+  <div id="app">
+    <AppHeader></AppHeader>
+<!--
     <v-main>
       <router-view></router-view>
     </v-main>
-
-    <footer :user='user'>
-      <Footer/>
-    </footer>
-  </v-app>
+-->
+    <AppFooter></AppFooter>
+  </div>
 </template>
 
 <script>
-import Header from './components/Header.vue';
-import Footer from './components/Footer.vue';
+import AppHeader from './components/Header.vue';
+import AppFooter from './components/Footer.vue';
 import '../public/style.scss';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    Header,
-    Footer 
+    AppHeader,
+    AppFooter 
   },
   data: () => {
     return {};
   },
-  computed:{
-    user(){
+  computed: {
+    user() {
       return this.$store.getters.user
     }
   },
-  mounted(){
-    this.$store.dispatch('getAllUsers');
-    this.$store.dispatch('getOneAccount', this.user.id);
+  mounted() {
+    this.$store.dispatch('getUsers');
+    this.$store.dispatch('getUserById', this.user.id);
   }
-}
-
+};
 </script>
 
 <style lang="scss">
