@@ -1,17 +1,27 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-//Ajouter les routes 
-
-Vue.use(VueRouter);
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
-    //Ajouter les routes
+    {
+        path: "/",
+        name: "Home", 
+        component: () => import("../components/Home.vue")
+    }
 ];
 
-const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
 });
 
-export default router;
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/', '/signup', '/login']
+    const authRequired = !publicPages.includes(to.path)
+    const loggedIn = localStorage.getItem('userId')
+    const loggedToken = localStorage.getItem('token')
+    if (authRequired && !loggedIn && !loggedToken) {
+        return next('/login')
+    }
+    next()
+});
+
+export default router

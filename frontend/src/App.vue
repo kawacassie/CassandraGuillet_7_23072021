@@ -1,18 +1,14 @@
 <template>
   <div id="app">
     <AppHeader></AppHeader>
-<!--
-    <v-main>
-      <router-view></router-view>
-    </v-main>
--->
+    <router-view></router-view>
     <AppFooter></AppFooter>
   </div>
 </template>
 
 <script>
-import AppHeader from './components/Header.vue';
-import AppFooter from './components/Footer.vue';
+import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
 import '../public/style.scss';
 
 export default {
@@ -21,18 +17,6 @@ export default {
     AppHeader,
     AppFooter 
   },
-  data: () => {
-    return {};
-  },
-  computed: {
-    user() {
-      return this.$store.getters.user
-    }
-  },
-  mounted() {
-    this.$store.dispatch('getUsers');
-    this.$store.dispatch('getUserById', this.user.id);
-  }
 };
 </script>
 
