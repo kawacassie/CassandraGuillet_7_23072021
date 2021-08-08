@@ -8,6 +8,11 @@ footer {
     margin-top: 2em;
 }
 
+#info-footer {
+    display: flex;
+    justify-content: space-around;
+}
+
 p, span, div {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
