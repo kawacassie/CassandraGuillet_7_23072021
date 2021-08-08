@@ -5,6 +5,17 @@ const routes = [
         path: '/',
         name: 'Home',
         component: () => import('../components/Home'),
+    },
+
+    {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../components/Login'),
+    },
+    {
+        path: '/signup',
+        name: 'SignUp',
+        component: () => import('../components/SignUp')
     }
 ]
 

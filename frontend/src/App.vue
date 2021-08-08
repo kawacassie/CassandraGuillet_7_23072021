@@ -1,16 +1,14 @@
 <template>
-  <Home msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
 import '../public/style.scss';
 
 export default {
   name: 'App',
-  components: {
-    Home
-  }
 }
 </script>
 
