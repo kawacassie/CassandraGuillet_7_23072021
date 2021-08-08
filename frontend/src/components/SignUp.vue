@@ -4,22 +4,22 @@
         <h2>Veuillez vous inscrire : </h2>
         <form @submit.prevent="handleSubmit">
             <div class="form-group">
-                <label for="InputFirstName">Prénom :</label>
+                <label for="InputFirstName">Prénom : </label>
                 <input type="text" v-model="InputFirstName" name="InputFirstName" class="form-control" id="InputFirstName" placeholder="Prénom" :class="{ 'is-invalid': submitted && !InputFirstName }">
                 <div v-show="submitted && !InputFirstName" class="invalid-feedback">Un prénom est requis</div>
             </div>
             <div class="form-group">
-                <label for="InputLastName">Nom :</label>
+                <label for="InputLastName">Nom : </label>
                 <input type="text" v-model="InputLastName" name="InputLastName" class="form-control" id="InputLastName" placeholder="Nom" :class="{ 'is-invalid': submitted && !InputLastName }">
                 <div v-show="submitted && !InputLastName" class="invalid-feedback">Un nom est requis</div>
             </div>
             <div class="form-group">
-                <label for="InputEmail">Adresse e-mail :</label>
+                <label for="InputEmail">Adresse e-mail : </label>
                 <input type="email" v-model="InputEmail" name="InputEmail" class="form-control" id="InputEmail" placeholder="Adresse e-mail" :class="{ 'is-invalid': submitted && !InputEmail }">
                 <div v-show="submitted && !InputEmail" class="invalid-feedback">Une adresse e-mail est requise</div>
             </div>
             <div class="form-group">
-                <label for="InputPassword">Mot de passe :</label>
+                <label for="InputPassword">Mot de passe : </label>
                 <input type="password" v-model="InputPassword" name="InputPassword" class="form-control" id="InputPassword" placeholder="Mot de passe" :class="{ 'is-invalid': submitted && !InputPassword }">
                 <div v-show="submitted && !InputPassword" class="invalid-feedback">Un mot de passe est requis</div>
             </div>
@@ -53,10 +53,10 @@ export default {
             const InputEmail = this.InputEmail
             const InputPassword = this.InputPassword
             this.submitted = true; 
-            axios.post('http://localhost:8080/api/user/signup', { first_name: InputFirstName, last_name: InputLastName, email: InputEmail, password: InputPassword })
+            axios.post('http://localhost:8081/api/users/signup', { first_name: InputFirstName, last_name: InputLastName, email: InputEmail, password: InputPassword })
             .then(function(response) {
                 if (response.statusText==="Created") {
-                    axios.post('http://localhost:8080/api/user/login', { email: InputEmail, password: InputPassword })
+                    axios.post('http://localhost:8081/api/users/login', { email: InputEmail, password: InputPassword })
                     .then(function(response) {
                     localStorage.setItem("token", response.data.token)
                     localStorage.setItem("userId", response.data.userId)
