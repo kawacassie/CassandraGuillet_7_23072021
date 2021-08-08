@@ -2,6 +2,12 @@ body {
     background-image: url('../src/assets/logo.png');
 }
 
+footer {
+    background-color: #FFD7D7;
+    padding: 0.5em;
+    margin-top: 2em;
+}
+
 p, span, div {
     font-family: Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
