@@ -53,10 +53,10 @@ export default {
             const InputEmail = this.InputEmail
             const InputPassword = this.InputPassword
             this.submitted = true; 
-            axios.post('http://localhost:8081/api/users/signup', { first_name: InputFirstName, last_name: InputLastName, email: InputEmail, password: InputPassword })
+            axios.post('http://localhost:3000/api/users/signup', { first_name: InputFirstName, last_name: InputLastName, email: InputEmail, password: InputPassword })
             .then(function(response) {
                 if (response.statusText==="Created") {
-                    axios.post('http://localhost:8081/api/users/login', { email: InputEmail, password: InputPassword })
+                    axios.post('http://localhost:3000/api/users/login', { email: InputEmail, password: InputPassword })
                     .then(function(response) {
                     localStorage.setItem("token", response.data.token)
                     localStorage.setItem("userId", response.data.userId)
