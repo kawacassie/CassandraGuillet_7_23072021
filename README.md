@@ -16,7 +16,7 @@ Implémenter un stockage de données sécurisé en utilisant SQL
 
 Depuis le dossier backend, lancez node avec npm start 
 
-Lancez le serveur avec nodemon server 
+Lancez le serveur avec nodemon server sur http://localhost:3000/
 
 ### Frontend ###
 

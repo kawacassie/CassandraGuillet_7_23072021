@@ -37,7 +37,7 @@ export default {
     methods: {
         handleSubmit() {
             this.submitted = true
-            axios.post('http://localhost:8081/api/users/login', { email: this.InputEmail, password: this.InputPassword })
+            axios.post('http://localhost:3000/api/users/login', { email: this.InputEmail, password: this.InputPassword })
             .then(function (response) {
                 localStorage.setItem("token", response.data.token)
                 localStorage.setItem("userId", response.data.userId)
