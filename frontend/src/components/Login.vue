@@ -11,6 +11,7 @@
             <div class="form-group">
                 <label for="InputPassword">Mot de passe :</label>
                 <input type="password" v-model="InputPassword" name="InputPassword" class="form-control" id="InputPassword" placeholder="Mot de passe" :class="{ 'is-invalid': submitted && !InputPassword }">
+                <div v-show="submitted && !InputPassword" class="invalid-feedback">Un mot de passe est requis</div>
             </div>
             <button>Se connecter</button>
         </form>

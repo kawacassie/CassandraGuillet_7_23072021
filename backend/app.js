@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const helmet = require('helmet');
 require('dotenv').config();
 
 const postRoutes = require('./routes/post');
@@ -21,9 +20,6 @@ const databaseTest = async function () {
 databaseTest();
 
 const app = express();
-
-// Ajoute extra headers pour protéger les routes
-app.use(helmet());
 
 // Headers pour éviter les erreurs de CORS
 app.use((req, res, next) => {
