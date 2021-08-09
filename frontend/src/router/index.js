@@ -16,6 +16,11 @@ const routes = [
         path: '/signup',
         name: 'SignUp',
         component: () => import('../components/SignUp')
+    }, 
+    {
+        path: '/posts',
+        name: 'Posts',
+        component: () => import('../components/Posts'),
     }
 ]
 
