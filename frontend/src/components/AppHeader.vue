@@ -2,8 +2,8 @@
     <header>
         <nav>
             <NavLogo></NavLogo>
-            <NavUser></NavUser>
-            <NavDefault></NavDefault>
+            <NavUser v-if="isLogged"></NavUser>
+            <NavDefault v-else></NavDefault>
         </nav>
     </header>
 </template>

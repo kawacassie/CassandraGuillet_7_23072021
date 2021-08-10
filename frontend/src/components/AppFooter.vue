@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania noir et blanc" height="50">
+        <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania noir et blanc" height="40">
         <div id="info-footer">
             <div>
                 <h4 class="text-center">À propos</h4>

@@ -26,7 +26,7 @@
             <button>S'inscrire</button>
         </form>
         <h2>Déjà un compte ?</h2>
-        <router-link to='/login'>Connectez-vous</router-link>
+        <router-link to='/login'><i class="fas fa-sign-in-alt"></i> Connectez-vous</router-link>
     </main>
 </template>
 

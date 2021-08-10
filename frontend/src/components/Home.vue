@@ -1,6 +1,6 @@
 <template>
   <main class="hello">
-    <img src="../assets/icon-above-font.svg" height="500" alt="logo couleur Groupomania">
+    <img src="../assets/logo-orange.png" height="100" alt="logo couleur Groupomania">
     <h1>Bienvenue sur le réseau social interne de Groupomania</h1>
     <h2>
       Quelques informations : 
@@ -24,7 +24,10 @@
     <p>
       <router-link to='/signup'><i class="fas fa-user-plus"></i> Inscription</router-link>
     </p>
-    <h2>Bonne visite ! </h2>
+    <h2>
+      Bonne visite !
+      <img src="../assets/logo-orange.png" height="40" alt="logo couleur Groupomania">
+     </h2>
   </main>
 </template>
 

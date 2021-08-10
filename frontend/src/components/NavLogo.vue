@@ -1,6 +1,6 @@
 <template>
     <router-link to="/posts">
-        <img src="../assets/icon-left-font.svg" alt="logo Groupomania" height="50">
+        <img src="../assets/icon-left-font-monochrome-black.svg" alt="Logo Groupomania noir et blanc" height="40">
     </router-link>
 </template>
 
