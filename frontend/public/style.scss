@@ -85,6 +85,22 @@ button:hover {
     cursor: pointer;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    display: flex;
+    align-self: center;
+    width: 80%;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 0.7em;
+    margin-top: 0.8em;
+    border-color: #FD2D01;
+}
+
 a, i {
     color: #FD2D01;
     text-decoration: none;
@@ -120,6 +136,10 @@ footer a {
 
     button {
         width: 15%;
+    }
+
+    input {
+        width: 20%;
     }
 
 }
