@@ -5,15 +5,11 @@ module.exports = (sequelize, DataTypes) => {
             models.Post.belongsTo(models.User, {
                 foreignKey: { allowNull: false }, onDelete: 'CASCADE',
             }),
-            models.Post.belongsTo(models.Category, {
-                foreignKey: { allowNull: false }, onDelete: 'CASCADE',
-            }),
             models.Post.hasMany(models.Comment);
         }
     };
     Post.init({
         user_id: { type: DataTypes.STRING, allowNull: false},
-        category_id: { type: DataTypes.STRING, allowNull: false},
         title: { type: DataTypes.STRING, allowNull: false},
         content: { type: DataTypes.TEXT, allowNull: false},
         image_url: { type: DataTypes.STRING, allowNull: true},
