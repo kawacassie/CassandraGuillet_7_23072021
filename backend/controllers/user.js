@@ -22,7 +22,7 @@ exports.signup = (req, res, next) => {
 
 // Connexion au compte utilisateur 
 exports.login = (req, res, next) => {
-  User.findOne({where: { email: req.body.email }})
+  User.findOne({ email: req.body.email })
   .then(user => {
       if(!user) {
           return res.status(404).json({ error: "Utilisateur non trouvé !" })
@@ -61,21 +61,21 @@ exports.updateAccount = (req, res, next) => {
         ...JSON.parse(req.body.user),
         avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
       } : { ...req.body };
-    User.updateOne({ ...userObject, id: req.params.id }, { where: { id: req.params.id }})
+    User.updateOne({ ...userObject, id: req.params.id }, { id: req.params.id })
       .then(() => res.status(200).json({ message: 'Compte utilisateur modifié !'}))
       .catch(error => res.status(400).json({ error }));
   };
 
 // Récupérer un compte utilisateur en particulier
 exports.getOneAccount = (req, res, next) => {
-    User.findOne({ where: { id: req.params.id }})
+    User.findOne({ id: req.params.id })
       .then(user => res.status(200).json(user))
       .catch(error => res.status(404).json({ error }));
   };
 
 // Suppression d'un compte utilisateur
 exports.deleteAccount = (req, res, next) => {
-    User.findOne({ where: { id: req.params.id }})
+    User.findOne({ id: req.params.id })
       .then(user => {
         const filename = user.avatar.split('/images/')[1];
         fs.unlink(`images/${filename}`, () => {
