@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
+    "iconv": "^3.0.0",
     "popper.js": "^1.16.1",
     "sweetalert2": "^11.1.2",
     "vue": "^3.0.0",
