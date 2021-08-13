@@ -1,6 +1,7 @@
 const token = require('../middleware/token');
 const database = require('../models');
 const fs = require('fs');
+const { DH_NOT_SUITABLE_GENERATOR } = require('constants');
 
 // Récupérer toutes les posts enregistrés
 
@@ -138,20 +139,28 @@ exports.modifyPost = async (req, res) => {
 };
 
 // Suppression d'un post
-
-
-
-exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id || is_admin === true })
-      .then(post => {
-        const filename = post.image_url.split('/images/')[1];
+exports.deletePost = async (req, res) => {
+  try {
+    const userId = token.getUserId(req);
+    const checkAdmin = await database.User.findOne({ where: { id: userId}});
+    const post = await database.Post.findOne({ where: {id: req.params.id }});
+    if (userId === post.user_id || checkAdmin.is_admin === true) {
+      if(post.image_url) {
+        const filename = post.image_url.split('/images')[1];
         fs.unlink(`images/${filename}`, () => {
-          Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Post supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
+          database.Post.destroy({ where: {id: post.id }});
+          res.status(200).json({ message: "Post supprimé"});
         });
-      })
-      .catch(error => res.status(500).json({ error }));
+      } else {
+        database.Post.destroy({ where: { id: post.id }}, {truncate: true});
+        res.status(200).json({ message : "Post supprimé" });
+      }
+    } else {
+      res.status(400).json({ message: "Vous n'avez pas les droits requis"});
+    }
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
 };
 
 // Afficher les likes et dislikes sur un post
@@ -182,25 +191,37 @@ exports.likeOrDislike = (req, res, next) => {
 }
 
 // Ajout d'un commentaire
-exports.addComment = (req, res, next) => {
-    const commentObject = JSON.parse(req.body.sauce);
-    delete commentObject._id;
-    const comment = new Comment({
-      ...commentObject,
+exports.addComment = async (req, res) => {
+  try {
+    const comment = req.body.commentContent;
+    const first_name = req.body.commentFirst_name; 
+    const last_name = req.body.commentLast_name; 
+    const newComment = await database.Comment.create({
+      content: comment,
+      first_name: first_name,
+      last_name: last_name,
+      user_id: token.getUserId(req),
+      post_id: req.params.id,
     });
-    comment.save()
-      .then(() => res.status(201).json({ message: 'Commentaire ajouté !'}))
-      .catch(error => res.status(400).json({ error }));
+    res.status(201).json({ newComment, messageRetour: "Commentaire ajouté" });
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
 };
 
 // Suppression d'un commentaire
-exports.deleteComment = (req, res, next) => {
-    Comment.findOne({ _id: req.params.id || is_admin === true })
-      .then(comment => {
-          Comment.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
-        ;
-      })
-      .catch(error => res.status(500).json({ error }));
-  };
+exports.deleteComment = async (req, res) => {
+  try {
+    const userId = token.getUserId(req);
+    const checkAdmin = await database.User.findOne({ where: { id: userId }});
+    const comment = await database.Comment.findOne({ where: { id: req.params.id }});
+    if (userId === comment.user_id || checkAdmin.is_admin === true) {
+      database.Comment.destroy({ where: { id: req.params.id }}, {truncate: true});
+      res.status(200).json({ message: "Commentaire supprimé"});
+    } else {
+      res.status(400).json({message: "Vous n'avez pas les droits requis"});
+    }
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
+};
