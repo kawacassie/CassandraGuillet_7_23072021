@@ -1,47 +1,146 @@
-const Post = require('../models/post');
-const Comment = require('../models/comment');
+const token = require('../middleware/token');
+const database = require('../models');
 const fs = require('fs');
 
 // Récupérer toutes les posts enregistrés
-exports.getAllPosts = (req, res, next) => {
-    Post.find()
-      .then(posts => res.status(200).json(posts))
-      .catch(error => res.status(400).json({ error }));
+
+exports.getAllPosts = async (req, res) => {
+  try {
+    const posts = await database.Post.findAll({
+      attributes: ["id", "title", "content", "image_url", "post_date", "likes", "dislikes"],
+      order: [["post_date", "DESC"]],
+      include: [
+        {
+          model: database.User,
+          attributes: ["id", "first_name", "last_name", "avatar"],
+        },
+        {
+          model: database.Comment,
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
+          order: [["comment_date", "ASC"]],
+          include: [
+            {
+              model: database.User,
+              attributes: ["first_name", "last_name", "avatar"],
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).send(posts);
+  } catch(error) {
+    return res.status(500).send({
+      error: "Une erreur est survenue lors de la récupération des posts",
+    });
+  }
 };
 
 // Création d'un nouveau post
-exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    delete postObject._id;
-    const post = new Post({
-      ...postObject,
-      image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+exports.createPost = async (req, res) => {
+  const userId = token.getUserId(req);
+  let image_url;
+  try {
+    const user = await database.User.findOne({
+      attributes: ["first_name", "last_name", "id", "avatar"],
+      where: { id: userId },
     });
-    post.save()
-      .then(() => res.status(201).json({ message: 'Post enregistré !'}))
-      .catch(error => res.status(400).json({ error }));
+    if (user !== null) {
+      if(req.file) {
+        image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+      } else {
+        image_url = null;
+      }
+      const post = await database.Post.create({
+        include: [
+          {
+            model: database.User,
+            attributes: ["first_name", "last_name", "avatar", "id"],
+          },
+        ],
+        title: req.body.title,
+        content: req.body.title,
+        image_url: image_url,
+        user_id: user.id,
+      });
+      res.status(201).json({ post: post, messageRetour: "Post enregistré" });
+    } else {
+      res.status(400).send({ error: "Erreur "});
+    }
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
 };
 
 // Récupérer un post en particulier
-exports.getOnePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-      .then(post => res.status(200).json(post))
-      .catch(error => res.status(404).json({ error }));
+exports.getOnePost = async (req, res) => {
+  try {
+    const post = await database.Post.findOne({
+      where: { id: req.params.id }, 
+      includes: [
+        {
+          model: database.User,
+          attributes: ["first_name", "last_name", "avatar", "id"],
+        },
+        {
+          model: database.Comment, 
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
+          order: [["comment_date", "ASC"]],
+          include: [
+            {
+              model: database.User,
+              attributes: ["first_name", "last_name", "avatar"],
+            },
+          ],
+
+        },
+      ],
+    });
+    res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
 };
 
 // Modification d'un post
-exports.modifyPost = (req, res, next) => {
-    const postObject = req.file ?
-      {
-        ...JSON.parse(req.body.post),
-        image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-      } : { ...req.body };
-    Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-      .then(() => res.status(200).json({ message: 'Post modifié !'}))
-      .catch(error => res.status(400).json({ error }));
+exports.modifyPost = async (req, res) => {
+  try {
+    let newImage_url; 
+    const userId = token.getUserId(req);
+    let post = await database.Post.findOne({ where: { id: req.params.id }});
+    if (userId === post.UserId) {
+      if (req.file) {
+        newImage_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        if (post.image_url) {
+          const filename = post.image_url.split('/images')[1];
+          fs.unlink(`images/${filename}`, (err) => {
+            if (err) console.log(err);
+            else {
+              console.log(`Fichier supprimé : images/${filename}`);
+            }
+          });
+        }
+      }
+      if (req.body.content) {
+        post.content = req.body.content;
+      }
+      post.title = req.body.title;
+      post.image_url = newImage_url;
+      const newPost = await post.save({
+        fields: ["title", "content", "image_url"]
+      });
+      res.status(200).json({ newPost: newPost, messageRetour: "Post modifié"});
+    } else {
+      res.status(400).json({ message: "Vous n'avez pas les droits requis"});
+    }
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" });
+  }
 };
 
 // Suppression d'un post
+
+
+
 exports.deletePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id || is_admin === true })
       .then(post => {
