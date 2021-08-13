@@ -1,7 +1,6 @@
 const token = require('../middleware/token');
 const database = require('../models');
 const fs = require('fs');
-const { DH_NOT_SUITABLE_GENERATOR } = require('constants');
 
 // Récupérer toutes les posts enregistrés
 
