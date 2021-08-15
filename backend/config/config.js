@@ -31,7 +31,7 @@ function createAdmin(req, res) {
                         res.status(500).send({ error });
                     });
             } else {
-                console.log({ message: 'L/admin existe déjà' });
+                console.log({ message: 'L\'admin existe déjà' });
             }
         })
         .catch((error) => {

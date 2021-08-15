@@ -8,17 +8,6 @@ const userRoutes = require('./routes/user');
 // Base de données
 const { sequelize } = require('./models/index');
 
-// Connexion à la BDD
-const databaseTest = async function () {
-  try {
-    await sequelize.authenticate(); 
-    console.log('La connexion est établie avec succès');
-  } catch (error) {
-    console.error('Impossible de se connecter à la base de donnée', error);
-  }
-}; 
-databaseTest();
-
 const app = express();
 
 // Headers pour éviter les erreurs de CORS
@@ -35,5 +24,16 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
+
+// Connexion à la BDD
+const databaseTest = async function () {
+  try {
+    await sequelize.authenticate(); 
+    console.log('La connexion est établie avec succès');
+  } catch (error) {
+    console.error('Impossible de se connecter à la base de donnée', error);
+  }
+}; 
+databaseTest();
 
 module.exports = app;
