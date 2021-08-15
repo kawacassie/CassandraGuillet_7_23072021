@@ -59,11 +59,11 @@ export default {
                     axios.post('http://localhost:3000/api/users/login', { email: InputEmail, password: InputPassword })
                     .then(function(response) {
                     localStorage.setItem("token", response.data.token)
-                    localStorage.setItem("userId", response.data.userId)
-                    localStorage.setItem("first_name", response.data.first_name)
-                    localStorage.setItem("last_name", response.data.last_name)
-                    localStorage.setItem("avatar", response.data.avatar)
-                    localStorage.setItem("is_admin", response.data.is_admin)
+                    localStorage.setItem("userId", response.data.user.id)
+                    localStorage.setItem("first_name", response.data.user.first_name)
+                    localStorage.setItem("last_name", response.data.user.last_name)
+                    localStorage.setItem("avatar", response.data.user.avatar)
+                    localStorage.setItem("is_admin", response.data.user.is_admin)
                     Swal.fire({
                         text: "Inscription réussie", 
                         footer: "Connexion en cours...",

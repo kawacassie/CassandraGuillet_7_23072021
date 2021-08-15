@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <img :src="avatar" alt="Image de profil" height="37">
-        <p>{{ first_name + last_name }}</p>
+        <p>{{ first_name + " " + last_name }}</p>
         <router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link>
         <router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link>
         <router-link to='/posts'><i class="fas fa-comments"></i> Voir les posts</router-link>
