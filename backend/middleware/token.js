@@ -8,7 +8,7 @@ function issueJWT(user) {
         sub: id,
         iat: Date.now(),
     };
-    const signedToken = JWT.signedToken(payload, "secret", { expiresIn: expiresIn });
+    const signedToken = JWT.sign(payload, "RANDOM_TOKEN_SECRET", { expiresIn: expiresIn });
     return {
         token: "Bearer " + signedToken, 
         expires: expiresIn,
@@ -17,7 +17,7 @@ function issueJWT(user) {
 
 function getUserId(req) {
     const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = JWT.verify(token, "secret");
+    const decodedToken = JWT.verify(token, "RANDOM_TOKEN_SECRET");
     const userId = decodedToken.sub;
     return userId;
 }

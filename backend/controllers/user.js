@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
     });
     if (user !== null) {
       if (user.first_name === req.body.first_name && user.last_name === req.body.last_name) {
-        return res.status(400).json({ error: "Ce nom est déjà utilisé" });
+        return res.status(400).json({ error: "Ce nom est déjà utilisé" + error });
       }
     } else {
       const hash = await bcrypt.hash(req.body.password, 10);
@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.status(400).send({ error: 'Email déjà utilisé' });
+    return res.status(400).send({ error: 'Email déjà utilisé' + error });
   }
 };
 
@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
     if (user === null) {
       return res.status(403).send({ error: 'Connexion échouée' });
     } else {
-      const hash = await bcrypt.compare(req.body.paswword, user.password);
+      const hash = await bcrypt.compare(req.body.password, user.password);
       if (!hash) {
         return res.status(401).send({ error: 'Mot de passe incorrect'});
       } else {
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
       }
     }
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };
 
