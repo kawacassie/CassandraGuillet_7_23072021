@@ -2,7 +2,7 @@
     <header>
         <nav>
             <NavLogo></NavLogo>
-            <NavUser v-if="isLogged"></NavUser>
+            <NavUser v-if="isLogged === true"></NavUser>
             <NavDefault v-else></NavDefault>
         </nav>
     </header>
@@ -23,6 +23,7 @@ export default {
     computed: {
         isLogged() {
             if (localStorage.getItem("token") !== null) {
+                console.log(localStorage)
                 return true
             }
             return false

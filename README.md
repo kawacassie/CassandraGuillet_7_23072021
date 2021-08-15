@@ -22,7 +22,7 @@ Lancez le serveur avec nodemon server sur http://localhost:3000/
 
 Depuis le dossier frontend, exécuter npm start puis npm run serve
 
-Le navigateur devrait s'ouvrir sur http://localhost:8080/ 
+Le navigateur devrait s'ouvrir sur http://localhost:8081/ 
 
 ### Base de données ###
 

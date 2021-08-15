@@ -16,7 +16,7 @@ exports.getAllPosts = async (req, res) => {
         },
         {
           model: database.Comment,
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
+          attributes: ["id", "content", "user_id", "first_name", "last_name", "comment_date"],
           order: [["comment_date", "ASC"]],
           include: [
             {
@@ -30,19 +30,19 @@ exports.getAllPosts = async (req, res) => {
     res.status(200).send(posts);
   } catch(error) {
     return res.status(500).send({
-      error: "Une erreur est survenue lors de la récupération des posts",
+      error: "Une erreur est survenue lors de la récupération des posts" + error
     });
   }
 };
 
 // Création d'un nouveau post
 exports.createPost = async (req, res) => {
-  const userId = token.getUserId(req);
+  const user_id = token.getUserId(req);
   let image_url;
   try {
     const user = await database.User.findOne({
       attributes: ["first_name", "last_name", "id", "avatar"],
-      where: { id: userId },
+      where: { id: user_id },
     });
     if (user !== null) {
       if(req.file) {
@@ -83,7 +83,7 @@ exports.getOnePost = async (req, res) => {
         },
         {
           model: database.Comment, 
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
+          attributes: ["id", "content", "user_id", "first_name", "last_name", "comment_date"],
           order: [["comment_date", "ASC"]],
           include: [
             {
@@ -107,7 +107,7 @@ exports.modifyPost = async (req, res) => {
     let newImage_url; 
     const userId = token.getUserId(req);
     let post = await database.Post.findOne({ where: { id: req.params.id }});
-    if (userId === post.UserId) {
+    if (userId === post.user_id) {
       if (req.file) {
         newImage_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         if (post.image_url) {

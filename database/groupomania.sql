@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 11 août 2021 à 16:21
+-- Généré le : Dim 15 août 2021 à 17:57
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -24,6 +24,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `comments`
 --
 
@@ -32,6 +47,8 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `post_id` int UNSIGNED NOT NULL,
   `user_id` int UNSIGNED NOT NULL,
+  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) NOT NULL,
   `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -79,14 +96,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `bio`, `is_admin`, `createdAt`, `updatedAt`) VALUES
-(1, 'admin', 'admin', 'admin@mail.com', '$2b$10$jhcLz7Pmtg3cShtUo0Xl8uoSjJBY8FQHQU00lyINBSJTMexKSG2hS', NULL, NULL, 1, '2021-08-01 19:25:03', '2021-08-01 19:25:03');
+(1, 'admin', 'admin', 'admin@mail.com', '$2b$10$jhcLz7Pmtg3cShtUo0Xl8uoSjJBY8FQHQU00lyINBSJTMexKSG2hS', NULL, NULL, 1, '2021-08-01 19:25:03', '2021-08-01 19:25:03'),
+(13, 'Cassandra', 'Guillet', 'cassandraguillet@gmail.com', '$2b$10$Inm90x.sYdzSb0o6deZ3muTMYe6o7iIVVK/FZT7gPyiVrnX57NTqm', NULL, NULL, 0, '2021-08-15 10:41:19', '2021-08-15 10:41:19'),
+(14, 'Pierre', 'Dupont', 'dupontpierre@mail.com', '$2b$10$HC8h9g8ByKQefbHra7XwTOphOVqqtpfuCSmsLKnZv19SRmx9hDq6K', NULL, NULL, 0, '2021-08-15 10:48:35', '2021-08-15 10:48:35'),
+(16, 'Martine', 'Dupont', 'dupontmartine@mail.com', '$2b$10$Sm.1pSKhsHI85DeREHE8j.WgHqafCQHaKAUI.1MmE7jvBeOnz3Bb6', NULL, NULL, 0, '2021-08-15 10:54:52', '2021-08-15 10:54:52'),
+(17, 'Martine', 'Boulanger', 'martineboulanger@mail.com', '$2b$10$7dS6NswFZfgnWeoUUpjlfuRMOs1HQa92YvzftFuSQ2wzohqEcYZDm', NULL, NULL, 0, '2021-08-15 13:02:17', '2021-08-15 13:02:17'),
+(18, 'Arsene', 'Lupin', 'arsenelupin@mail.com', '$2b$10$qkR6bjjbA3zK9VKDXPCAMuj9ylWcQBaD3ahzHFlopih/sER2lOS5G', NULL, NULL, 0, '2021-08-15 13:48:30', '2021-08-15 13:48:30');
 
 --
 -- Contraintes pour les tables déchargées
