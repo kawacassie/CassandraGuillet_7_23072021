@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Post.init({
-        user_id: { type: DataTypes.STRING, allowNull: false},
+        UserId: { type: DataTypes.STRING, allowNull: false},
         title: { type: DataTypes.STRING, allowNull: false},
         content: { type: DataTypes.TEXT, allowNull: false},
         image_url: { type: DataTypes.STRING, allowNull: true},

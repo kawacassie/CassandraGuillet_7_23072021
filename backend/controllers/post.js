@@ -16,7 +16,7 @@ exports.getAllPosts = async (req, res) => {
         },
         {
           model: database.Comment,
-          attributes: ["id", "content", "user_id", "first_name", "last_name", "comment_date"],
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
           order: [["comment_date", "ASC"]],
           include: [
             {
@@ -37,12 +37,12 @@ exports.getAllPosts = async (req, res) => {
 
 // Création d'un nouveau post
 exports.createPost = async (req, res) => {
-  const user_id = token.getUserId(req);
+  const UserId = token.getUserId(req);
   let image_url;
   try {
     const user = await database.User.findOne({
       attributes: ["first_name", "last_name", "id", "avatar"],
-      where: { id: user_id },
+      where: { id: UserId },
     });
     if (user !== null) {
       if(req.file) {
@@ -60,7 +60,7 @@ exports.createPost = async (req, res) => {
         title: req.body.title,
         content: req.body.title,
         image_url: image_url,
-        user_id: user.id,
+        UserId: UserId,
       });
       res.status(201).json({ post: post, messageRetour: "Post enregistré" });
     } else {
@@ -83,7 +83,7 @@ exports.getOnePost = async (req, res) => {
         },
         {
           model: database.Comment, 
-          attributes: ["id", "content", "user_id", "first_name", "last_name", "comment_date"],
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
           order: [["comment_date", "ASC"]],
           include: [
             {
@@ -107,7 +107,7 @@ exports.modifyPost = async (req, res) => {
     let newImage_url; 
     const userId = token.getUserId(req);
     let post = await database.Post.findOne({ where: { id: req.params.id }});
-    if (userId === post.user_id) {
+    if (userId === post.UserId) {
       if (req.file) {
         newImage_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         if (post.image_url) {
@@ -141,9 +141,9 @@ exports.modifyPost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const userId = token.getUserId(req);
-    const checkAdmin = await database.User.findOne({ where: { id: userId}});
+    const checkAdmin = await database.User.findOne({ where: { id: userId }});
     const post = await database.Post.findOne({ where: {id: req.params.id }});
-    if (userId === post.user_id || checkAdmin.is_admin === true) {
+    if (userId === post.UserId || checkAdmin.is_admin === true) {
       if(post.image_url) {
         const filename = post.image_url.split('/images')[1];
         fs.unlink(`images/${filename}`, () => {
@@ -199,8 +199,8 @@ exports.addComment = async (req, res) => {
       content: comment,
       first_name: first_name,
       last_name: last_name,
-      user_id: token.getUserId(req),
-      post_id: req.params.id,
+      UserId: token.getUserId(req),
+      PostId: req.params.id,
     });
     res.status(201).json({ newComment, messageRetour: "Commentaire ajouté" });
   } catch (error) {
@@ -214,7 +214,7 @@ exports.deleteComment = async (req, res) => {
     const userId = token.getUserId(req);
     const checkAdmin = await database.User.findOne({ where: { id: userId }});
     const comment = await database.Comment.findOne({ where: { id: req.params.id }});
-    if (userId === comment.user_id || checkAdmin.is_admin === true) {
+    if (userId === comment.UserId || checkAdmin.is_admin === true) {
       database.Comment.destroy({ where: { id: req.params.id }}, {truncate: true});
       res.status(200).json({ message: "Commentaire supprimé"});
     } else {

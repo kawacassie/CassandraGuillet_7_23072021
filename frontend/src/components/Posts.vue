@@ -81,8 +81,8 @@ export default {
             location.reload()
         }
         axios.get("http://localhost:3000/api/posts", { headers: {"Authorization": "Bearer " + localStorage.getItem("token")} })
-        .then(res => {
-            const rep = res.data.posts
+        .then(response => {
+            const rep = response.data.posts
             if (rep.length === 0) { this.NoPost = true } else { this.NoPost = false}
             this.posts = rep
         })
