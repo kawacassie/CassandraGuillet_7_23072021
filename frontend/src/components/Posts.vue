@@ -20,7 +20,7 @@
                     <img :src="post.avatar" alt="avatar utilisateur">
                     <span>
                         Posté par {{ post.userFirstName + " " + post.userLastName }} <br>
-                        Le {{ post.post_date.slice(0,10).split('-').reverse().join('/') + ' à ' + post.post_date.slice(11,16)}}
+                        Le {{ post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
                     </span>
                 </div>
                 <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
@@ -61,6 +61,7 @@ export default {
             title: "",
             content: "",
             image_url: "",
+            createdAt: "",
             UserId: "",
             file: null,
             posts: [],
@@ -78,6 +79,7 @@ export default {
             formData.set("UserId", this.UserId.toString())
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
+            formData.set("createdAt", this.createdAt.toString())
             axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")} })
             .then(() => {
                 this.UserId = ""
