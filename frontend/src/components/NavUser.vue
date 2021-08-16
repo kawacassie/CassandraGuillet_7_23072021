@@ -2,11 +2,12 @@
     <div class="container">
         <img :src="avatar" alt="Image de profil" height="37">
         <p>{{ first_name + " " + last_name }}</p>
-        <router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link>
-        <router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link>
-        <router-link to='/posts'><i class="fas fa-comments"></i> Voir les posts</router-link>
-        <a @click="deconnexion" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
-        
+        <ul id="nav_user">
+            <li><router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link></li>
+            <li><router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link></li>
+            <li><router-link to='/posts'><i class="fas fa-comments"></i> Voir les posts</router-link></li>
+            <li><a @click="deconnexion" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+        </ul>
     </div>
 </template>
 

@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     };
     Post.init({
-        user_id: { type: DataTypes.STRING, allowNull: false},
+        UserId: { type: DataTypes.STRING, allowNull: false},
         title: { type: DataTypes.STRING, allowNull: false},
         content: { type: DataTypes.TEXT, allowNull: false},
         image_url: { type: DataTypes.STRING, allowNull: true},
-        post_date: { type: DataTypes.STRING, allowNull: false},
+        createdAt: { type: DataTypes.STRING, allowNull: false},
         likes: { type: DataTypes.INTEGER, allowNull: true, default: 0},
         dislikes: { type: DataTypes.INTEGER, allowNull: true, default: 0 },
         usersLiked: { type: DataTypes.INTEGER },

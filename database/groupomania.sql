@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 15 août 2021 à 17:57
+-- Généré le : lun. 16 août 2021 à 10:20
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -24,36 +24,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `categories`
---
-
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `comments`
 --
 
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE IF NOT EXISTS `comments` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `post_id` int UNSIGNED NOT NULL,
-  `user_id` int UNSIGNED NOT NULL,
+  `PostId` int UNSIGNED NOT NULL,
+  `UserId` int UNSIGNED NOT NULL,
   `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) NOT NULL,
   `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `post_id` (`post_id`)
+  KEY `user_id` (`UserId`),
+  KEY `post_id` (`PostId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -65,15 +50,15 @@ CREATE TABLE IF NOT EXISTS `comments` (
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE IF NOT EXISTS `posts` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int UNSIGNED NOT NULL,
+  `UserId` int UNSIGNED NOT NULL,
   `title` varchar(100) NOT NULL,
   `content` text NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
-  `post_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `likes` smallint DEFAULT '0',
   `dislikes` smallint DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`UserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -118,14 +103,14 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `avat
 -- Contraintes pour la table `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `fk_comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_comment_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_comment_post_id` FOREIGN KEY (`PostId`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_comment_user_id` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `posts`
 --
 ALTER TABLE `posts`
-  ADD CONSTRAINT `fk_post_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_post_user_id` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

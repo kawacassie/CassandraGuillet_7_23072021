@@ -1,7 +1,46 @@
 <template>
     <main>
-        <h2>Ajouter un nouveau post</h2>
+        <h2>Ajouter un nouveau post :</h2> 
+        <form enctype="multipart/form-data" class="form-group">
+            <label for="title">Titre : </label>
+            <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le titre de votre post ici..."></textarea>
+            <label for="newPost">Contenu du post : </label>
+            <textarea name="newPost" id="newPost" v-model="posts" cols="50" rows="10" placeholder="Écrivez votre texte ici..."></textarea>
+            <label for="File">Choisir une nouvelle image : </label>
+            <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
+            <div class="form-footer">
+                <input type="reset">
+                <input type="submit" @click.prevent="createPost()">
+            </div>
+        </form>
+
+        <div v-for="post in posts" :key="post.id">
+            <div class="posts">
+                <div>
+                    <img :src="post.avatar" alt="avatar utilisateur">
+                    <span>
+                        Posté par {{ post.userFirstName + " " + post.userLastName }} <br>
+                        Le {{ post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
+                    </span>
+                </div>
+                <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
+                    <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
+                    <a href="'#/posts/' + post.id "><i class="fas fa-trash-alt"></i> Supprimer le post</a>
+                </div>
+                <div class="post-body">
+                    <h3 v-if="post.title !== ''">{{ post.title }}</h3>
+                    <p v-if="post.content !== ''">{{ post.content }}</p>
+                    <img :src="post.image_url" alt="Image du post" v-if="post.image_url !== ''">
+                </div>
+                <div class="post-footer">
+                    <a href="'#/' + post.id">Voir les commentaires</a>
+                </div>
+            </div>
+        </div>
         <NoPost v-if="NoPost === true"></NoPost>
+        <div class="card-footer">
+            <p>Il n'y a pas de message plus ancien que celui au-dessus...</p>
+        </div>
     </main>
 </template>
 
@@ -22,7 +61,8 @@ export default {
             title: "",
             content: "",
             image_url: "",
-            currentUserId: "",
+            createdAt: "",
+            UserId: "",
             file: null,
             posts: [],
 
@@ -33,15 +73,16 @@ export default {
             this.file = this.$refs.file.files[0];
             this.image_url = URL.createObjectURL(this.file)
         },
-        addNewPost(){
+        createPost(){
             const formData = new FormData()
             formData.set("image_url", this.file)
-            formData.set("user_id", this.currentUserId.toString())
+            formData.set("UserId", this.UserId.toString())
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
+            formData.set("createdAt", this.createdAt.toString())
             axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")} })
             .then(() => {
-                this.user_id = ""
+                this.UserId = ""
                 this.title = ""
                 this.content = ""
                 this.file = null
@@ -75,14 +116,15 @@ export default {
     },
     created: function() {
         this.isAdmin = localStorage.getItem("is_admin")
-        this.currentUserId = localStorage.getItem("id")
+        this.UserId = localStorage.getItem("userId")
         if (localStorage.getItem("refresh") === null) {
             localStorage.setItem("refresh", 0)
             location.reload()
         }
         axios.get("http://localhost:3000/api/posts", { headers: {"Authorization": "Bearer " + localStorage.getItem("token")} })
-        .then(res => {
-            const rep = res.data.posts
+        .then(response => {
+            console.log(response.data)
+            const rep = response.data
             if (rep.length === 0) { this.NoPost = true } else { this.NoPost = false}
             this.posts = rep
         })
