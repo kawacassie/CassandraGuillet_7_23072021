@@ -21,6 +21,17 @@ nav a {
     padding-right: 2em;
 }
 
+#nav_user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1em;
+}
+
+#nav_user li {
+    padding-bottom: 1em;
+}
+
 footer {
     background-color: #FFD7D7;
     padding-top: 3em;
@@ -99,6 +110,26 @@ input {
     font-size: 0.7em;
     margin-top: 0.8em;
     border-color: #FD2D01;
+    outline: none;
+}
+
+textarea {
+    display: flex;
+    align-self: center;
+    width: 90%;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 1em;
+    margin-top: 0.8em;
+    margin-bottom: 2em;
+    border-color: #FD2D01;
+    outline: none;
+}
+
+.form-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 a, i {
@@ -134,12 +165,21 @@ footer a {
         justify-content: space-around;
     }
 
+    #nav_user {
+        display: flex;
+        flex-direction: row;
+    }
+
     button {
         width: 15%;
     }
 
     input {
         width: 20%;
+    }
+
+    textarea {
+        width: 50%;
     }
 
 }
