@@ -1,7 +1,7 @@
 <template>
     <main>
         <h2>Ajouter un nouveau post :</h2> 
-        <form enctype="multipart/form-data" class="form-group">
+        <form method="POST" enctype="multipart/form-data" class="form-group">
             <label for="title">Titre : </label>
             <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le titre de votre post ici..."></textarea>
             <label for="newPost">Contenu du post : </label>
@@ -17,23 +17,22 @@
         <div v-for="post in posts" :key="post.id">
             <div class="posts">
                 <div>
-                    <img :src="post.avatar" alt="avatar utilisateur">
+                    <img :src="posts.avatar" alt="avatar utilisateur">
                     <span>
-                        Posté par {{ post.userFirstName + " " + post.userLastName }} <br>
-                        Le {{ post.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + post.createdAt.slice(11,16)}}
+                        Posté par {{ posts.userFirstName + " " + posts.userLastName }} <br>
                     </span>
                 </div>
-                <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
+                <div v-if="posts.UserId === this.UserId || this.is_admin === 'true'">
                     <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
                     <a href="'#/posts/' + post.id "><i class="fas fa-trash-alt"></i> Supprimer le post</a>
                 </div>
                 <div class="post-body">
-                    <h3 v-if="post.title !== ''">{{ post.title }}</h3>
-                    <p v-if="post.content !== ''">{{ post.content }}</p>
-                    <img :src="post.image_url" alt="Image du post" v-if="post.image_url !== ''">
+                    <h3 v-if="posts.title !== ''">{{ posts.title }}</h3>
+                    <p v-if="posts.content !== ''">{{ posts.content }}</p>
+                    <img :src="posts.image_url" alt="Image du post" v-if="posts.image_url !== ''">
                 </div>
                 <div class="post-footer">
-                    <a href="'#/' + post.id">Voir les commentaires</a>
+                    <a href="'#/' + posts.id">Voir les commentaires</a>
                 </div>
             </div>
         </div>
@@ -57,7 +56,7 @@ export default {
     data() {
         return {
             NoPost: false,
-            isAdmin: false, 
+            is_admin: false, 
             title: "",
             content: "",
             image_url: "",
@@ -80,7 +79,7 @@ export default {
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
             formData.set("createdAt", this.createdAt.toString())
-            axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization":"Bearer " + localStorage.getItem("token")} })
+            axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization": localStorage.getItem("token")} })
             .then(() => {
                 this.UserId = ""
                 this.title = ""
@@ -121,7 +120,7 @@ export default {
             localStorage.setItem("refresh", 0)
             location.reload()
         }
-        axios.get("http://localhost:3000/api/posts", { headers: {"Authorization": "Bearer " + localStorage.getItem("token")} })
+        axios.get("http://localhost:3000/api/posts", { headers: {"Authorization": localStorage.getItem("token")} })
         .then(response => {
             console.log(response.data)
             const rep = response.data
