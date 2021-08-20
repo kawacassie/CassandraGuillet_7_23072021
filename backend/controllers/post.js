@@ -38,7 +38,7 @@ exports.getAllPosts = async (req, res) => {
 // Création d'un nouveau post
 exports.createPost = async (req, res) => {
   const UserId = token.getUserId(req);
-  let image_url;
+  let image_url = "";
   try {
     const user = await database.User.findOne({
       attributes: ["first_name", "last_name", "id", "avatar"],
@@ -58,16 +58,16 @@ exports.createPost = async (req, res) => {
           },
         ],
         title: req.body.title,
-        content: req.body.title,
+        content: req.body.content,
         image_url: image_url,
         UserId: UserId,
       });
       res.status(201).json({ post: post, messageRetour: "Post enregistré" });
     } else {
-      res.status(400).send({ error: "Erreur "});
+      res.status(400).send({ error: "Erreur " + error});
     }
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };
 
