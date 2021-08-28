@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 16 août 2021 à 10:20
+-- Généré le : sam. 28 août 2021 à 16:43
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) NOT NULL,
-  `comment_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`UserId`),
   KEY `post_id` (`PostId`)
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `content` text NOT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `likes` smallint DEFAULT '0',
   `dislikes` smallint DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -81,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -89,11 +90,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `bio`, `is_admin`, `createdAt`, `updatedAt`) VALUES
 (1, 'admin', 'admin', 'admin@mail.com', '$2b$10$jhcLz7Pmtg3cShtUo0Xl8uoSjJBY8FQHQU00lyINBSJTMexKSG2hS', NULL, NULL, 1, '2021-08-01 19:25:03', '2021-08-01 19:25:03'),
-(13, 'Cassandra', 'Guillet', 'cassandraguillet@gmail.com', '$2b$10$Inm90x.sYdzSb0o6deZ3muTMYe6o7iIVVK/FZT7gPyiVrnX57NTqm', NULL, NULL, 0, '2021-08-15 10:41:19', '2021-08-15 10:41:19'),
-(14, 'Pierre', 'Dupont', 'dupontpierre@mail.com', '$2b$10$HC8h9g8ByKQefbHra7XwTOphOVqqtpfuCSmsLKnZv19SRmx9hDq6K', NULL, NULL, 0, '2021-08-15 10:48:35', '2021-08-15 10:48:35'),
-(16, 'Martine', 'Dupont', 'dupontmartine@mail.com', '$2b$10$Sm.1pSKhsHI85DeREHE8j.WgHqafCQHaKAUI.1MmE7jvBeOnz3Bb6', NULL, NULL, 0, '2021-08-15 10:54:52', '2021-08-15 10:54:52'),
-(17, 'Martine', 'Boulanger', 'martineboulanger@mail.com', '$2b$10$7dS6NswFZfgnWeoUUpjlfuRMOs1HQa92YvzftFuSQ2wzohqEcYZDm', NULL, NULL, 0, '2021-08-15 13:02:17', '2021-08-15 13:02:17'),
-(18, 'Arsene', 'Lupin', 'arsenelupin@mail.com', '$2b$10$qkR6bjjbA3zK9VKDXPCAMuj9ylWcQBaD3ahzHFlopih/sER2lOS5G', NULL, NULL, 0, '2021-08-15 13:48:30', '2021-08-15 13:48:30');
+(19, 'Marin', 'Dubois', 'marindubois@mail.com', '$2b$10$L5l5hAY1KprOSKhD7arjTeQpH7LX5xKFCG6dmf7tBwklMRd6Kw8H2', NULL, NULL, 0, '2021-08-23 08:45:29', '2021-08-23 08:45:29'),
+(22, 'Martine', 'Boulanger', 'martineboulanger@mail.com', '$2b$10$NmfHZpuG4MBic0wX0FR0JOpm2x.VyL35rDvAh4A0hl7XHYud.KuqS', NULL, NULL, 0, '2021-08-23 08:54:35', '2021-08-23 08:54:35');
 
 --
 -- Contraintes pour les tables déchargées

@@ -1,4 +1,4 @@
-const { Model } = require('sequelize');
+const { Model, Sequelize } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Comment extends Model {
         static associate(models) {
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         last_name: {type: DataTypes.STRING, allowNull: false},
         first_name: { type: DataTypes.STRING, allowNull: false},
         content: { type: DataTypes.STRING, allowNull: false},
-        comment_date: { type: DataTypes.STRING, allowNull: false},
+        createdAt: { type: Sequelize.JSON, allowNull: false},
     },
     {
         sequelize,
