@@ -152,6 +152,10 @@ a, i {
     justify-content: center;
 }
 
+.post-body img {
+    height: 300px;
+}
+
 footer a {
     font-size: 0.8em;
     padding-right: 2em;
@@ -198,7 +202,11 @@ footer a {
 
     .posts {
         background-color: blueviolet;
-        width: 70%;
+        width: 65%;
+    }
+
+    .post-body img {
+        height: 500px;
     }
 
 }
