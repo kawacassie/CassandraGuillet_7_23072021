@@ -5,7 +5,7 @@
             <label for="title">Titre : </label>
             <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le titre de votre post ici..."></textarea>
             <label for="newPost">Contenu du post : </label>
-            <textarea name="newPost" id="newPost" v-model="posts" cols="50" rows="10" placeholder="Écrivez votre texte ici..."></textarea>
+            <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre texte ici..."></textarea>
             <label for="File">Choisir une nouvelle image : </label>
             <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
             <div class="form-footer">
@@ -17,22 +17,22 @@
         <div v-for="post in posts" :key="post.id">
             <div class="posts">
                 <div>
-                    <img :src="posts.avatar" alt="avatar utilisateur">
+                    <img :src="post.avatar" alt="avatar utilisateur">
                     <span>
-                        Posté par {{ posts.userFirstName + " " + posts.userLastName }} <br>
+                        Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
                     </span>
                 </div>
-                <div v-if="posts.UserId === this.UserId || this.is_admin === 'true'">
+                <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
                     <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
-                    <a href="'#/posts/' + post.id "><i class="fas fa-trash-alt"></i> Supprimer le post</a>
+                    <button @click="deletePost(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</button>
                 </div>
                 <div class="post-body">
-                    <h3 v-if="posts.title !== ''">{{ posts.title }}</h3>
-                    <p v-if="posts.content !== ''">{{ posts.content }}</p>
-                    <img :src="posts.image_url" alt="Image du post" v-if="posts.image_url !== ''">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    <img :src="posts.image_url" alt="Image du post" v-if="post.image_url !== null">
                 </div>
                 <div class="post-footer">
-                    <a href="'#/' + posts.id">Voir les commentaires</a>
+                    <!-- AJOUTER COMMENTAIRES ET LIKES ICI -->
                 </div>
             </div>
         </div>
@@ -60,7 +60,6 @@ export default {
             title: "",
             content: "",
             image_url: "",
-            createdAt: "",
             UserId: "",
             file: null,
             posts: [],
@@ -78,7 +77,6 @@ export default {
             formData.set("UserId", this.UserId.toString())
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
-            formData.set("createdAt", this.createdAt.toString())
             axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization": localStorage.getItem("token")} })
             .then(() => {
                 this.UserId = ""
@@ -111,6 +109,44 @@ export default {
                     timerProgressBar: true
                 })
             })
+        },
+        deletePost(postId){
+            if (confirm("La suppression d'une publication est irréversible, voulez-vous continuer ?")){
+                fetch("http://localhost:3000/api/posts/" + this.posts.id, {
+                    body: JSON.stringify({ post_id: postId}),
+                    method: "delete",
+                    headers: {
+                        "Authorization": localStorage.getItem("token")
+                    },
+                })
+                .then(() => {
+                    Swal.fire({
+                        text: "Post supprimé",
+                        footer: "Redirection en cours...",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                        timerProgressBar: true, 
+                        willClose: () => { location.reload() }
+                    })
+                })
+                .catch((error) => {
+                    const codeError = error.message.split("code ")[1]
+                    let messageError = ""
+                    switch (codeError){
+                        case "400": messageError = "Le post n'a pas pu être supprimé"; break
+                        case "401": messageError = "Requête non-authentifiée"; break
+                    }
+                    Swal.fire({
+                        title: "Une erreur est survenue",
+                        text: messageError || error.message,
+                        icon: "error",
+                        timer: 3500,
+                        showConfirmButton: false, 
+                        timerProgressBar: true
+                    })
+                })
+            }
         }
     },
     created: function() {

@@ -16,8 +16,8 @@ exports.getAllPosts = async (req, res) => {
         },
         {
           model: database.Comment,
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
-          order: [["comment_date", "ASC"]],
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
+          order: [["createdAt", "ASC"]],
           include: [
             {
               model: database.User,
@@ -83,8 +83,8 @@ exports.getOnePost = async (req, res) => {
         },
         {
           model: database.Comment, 
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "comment_date"],
-          order: [["comment_date", "ASC"]],
+          attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
+          order: [["createdAt", "ASC"]],
           include: [
             {
               model: database.User,
