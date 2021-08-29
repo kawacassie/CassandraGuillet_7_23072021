@@ -138,6 +138,24 @@ a, i {
     font-size: 1.1em;
 }
 
+.posts {
+    background-color: blueviolet;
+    width: 95%;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.allposts {
+    display: flex;
+    justify-content: center;
+}
+
+.post-body img {
+    height: 300px;
+}
+
 footer a {
     font-size: 0.8em;
     padding-right: 2em;
@@ -180,6 +198,15 @@ footer a {
 
     textarea {
         width: 50%;
+    }
+
+    .posts {
+        background-color: blueviolet;
+        width: 65%;
+    }
+
+    .post-body img {
+        height: 500px;
     }
 
 }
