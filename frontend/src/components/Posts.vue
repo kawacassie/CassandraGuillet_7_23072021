@@ -14,9 +14,9 @@
             </div>
         </form>
 
-        <div v-for="post in posts" :key="post.id">
+        <div v-for="post in posts" :key="post.id" class="allposts">
             <div class="posts">
-                <div>
+                <div class="post-header">
                     <img :src="post.avatar" alt="avatar utilisateur">
                     <span>
                         Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
@@ -29,7 +29,7 @@
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
                     <p>{{ post.content }}</p>
-                    <img :src="posts.image_url" alt="Image du post" v-if="post.image_url !== null">
+                    <img :src="post.image_url" alt="Image du post" v-if="post.image_url !== null">
                 </div>
                 <div class="post-footer">
                     <!-- AJOUTER COMMENTAIRES ET LIKES ICI -->
