@@ -1,6 +1,6 @@
 <template>
     <main>
-        <v-card v-for="user of users" :key="user.id" :user="user" class="users" outlined shaped elevation="3">
+        <v-card v-for="user of users" :key="user.id" :user="user" class="users">
             <v-card-title flat dense dark>
                 <v-avatar size="42px">
                     <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil">
