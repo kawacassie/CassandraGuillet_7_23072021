@@ -22,9 +22,9 @@
                         Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
                     </span>
                 </div>
-                <div v-if="post.User.id === this.UserId || this.is_admin === 'true'">
+                <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
                     <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
-                    <a href="'#/posts/' + post.id "><i class="fas fa-trash-alt"></i> Supprimer le post</a>
+                    <button @click="deletePost(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</button>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -32,7 +32,7 @@
                     <img :src="posts.image_url" alt="Image du post" v-if="post.image_url !== null">
                 </div>
                 <div class="post-footer">
-                    <a href="'#/' + post.id">Voir les commentaires</a>
+                    <!-- AJOUTER COMMENTAIRES ET LIKES ICI -->
                 </div>
             </div>
         </div>
@@ -109,6 +109,44 @@ export default {
                     timerProgressBar: true
                 })
             })
+        },
+        deletePost(postId){
+            if (confirm("La suppression d'une publication est irréversible, voulez-vous continuer ?")){
+                fetch("http://localhost:3000/api/posts/" + this.posts.id, {
+                    body: JSON.stringify({ post_id: postId}),
+                    method: "delete",
+                    headers: {
+                        "Authorization": localStorage.getItem("token")
+                    },
+                })
+                .then(() => {
+                    Swal.fire({
+                        text: "Post supprimé",
+                        footer: "Redirection en cours...",
+                        icon: "success",
+                        timer: 2000,
+                        showConfirmButton: false,
+                        timerProgressBar: true, 
+                        willClose: () => { location.reload() }
+                    })
+                })
+                .catch((error) => {
+                    const codeError = error.message.split("code ")[1]
+                    let messageError = ""
+                    switch (codeError){
+                        case "400": messageError = "Le post n'a pas pu être supprimé"; break
+                        case "401": messageError = "Requête non-authentifiée"; break
+                    }
+                    Swal.fire({
+                        title: "Une erreur est survenue",
+                        text: messageError || error.message,
+                        icon: "error",
+                        timer: 3500,
+                        showConfirmButton: false, 
+                        timerProgressBar: true
+                    })
+                })
+            }
         }
     },
     created: function() {

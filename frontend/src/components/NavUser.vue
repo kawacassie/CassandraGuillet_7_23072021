@@ -20,7 +20,7 @@ export default {
         return {
             first_name: "",
             last_name: "",
-            avatar: "../assets/default-avatar.png"
+            avatar: "./assets/default-avatar.png"
         }
     },
     created: function() {
