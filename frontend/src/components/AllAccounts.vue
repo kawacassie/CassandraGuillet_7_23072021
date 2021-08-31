@@ -1,11 +1,9 @@
 <template>
-    <main>
+    <main class="cards-container">
         <div v-for="user of users" :key="user.id" :user="user" class="all-cards">
             <div class="cards-title">
-                <div class="cards-img">
-                    <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil" height="150">
-                    <img v-else src="../assets/default-avatar.png" alt="Photo de profil" height="150">
-                </div>
+                <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil" height="150">
+                <img v-else src="../assets/default-avatar.png" alt="Photo de profil" height="150">
                 <div> {{ user.first_name + " " + user.last_name }} </div>
             </div>
             <div class="cards-body">

@@ -160,6 +160,39 @@ a, i {
     height: 300px;
 }
 
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.all-cards {
+    box-shadow: 4px 6px 8px 0 rgba(0,0,0,0.4);
+    width: 95%;
+    padding: 1em;
+    margin: 0.5em;
+    background-color: #FFD7D7;
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
+}
+
+.cards-title {
+    margin-top: 0;
+    width: 100%;
+	height: 60%;
+    font-weight: bold;
+}
+
+.cards-title img {
+	width: 90%;
+	height: 80%;
+	object-fit: cover;
+    border-radius: 1.5em 1.5em 0 0;
+}
+
+.cards-body {
+    font-size: 1em;
+}
+
 footer a {
     font-size: 0.8em;
     padding-right: 2em;
@@ -211,6 +244,10 @@ footer a {
 
     .post-body img {
         height: 500px;
+    }
+
+    .all-cards {
+        width: 25%;
     }
 
 }

@@ -23,9 +23,9 @@
                         Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
                     </span>
                 </div>
-                <div v-if="post.UserId === this.UserId || this.is_admin === 'true'">
+                <div v-if="post.User.id === this.UserId || this.is_admin === 'true'">
                     <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
-                    <button @click="deletePost(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</button>
+                    <button @click="deletePost(postId)"><i class="fas fa-trash-alt"></i> Supprimer le post</button>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -113,7 +113,7 @@ export default {
         },
         deletePost(postId){
             if (confirm("La suppression d'une publication est irréversible, voulez-vous continuer ?")){
-                fetch("http://localhost:3000/api/posts/" + this.posts.id, {
+                fetch("http://localhost:3000/api/posts/" + this.post.id, {
                     body: JSON.stringify({ post_id: postId}),
                     method: "delete",
                     headers: {
