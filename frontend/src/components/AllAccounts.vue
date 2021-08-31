@@ -1,20 +1,17 @@
 <template>
     <main>
-        <v-card v-for="user of users" :key="user.id" :user="user" class="users">
-            <v-card-title flat dense dark>
-                <v-avatar size="42px">
-                    <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil">
-                    <img v-else src="../assets/default-avatar.png" alt="Photo de profil">
-                </v-avatar>
-                <div>
-                    <span>{{ user.first_name }}</span>
-                    <span>{{ user.last_name }}</span>
+        <div v-for="user of users" :key="user.id" :user="user" class="all-cards">
+            <div class="cards-title">
+                <div class="cards-img">
+                    <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil" height="150">
+                    <img v-else src="../assets/default-avatar.png" alt="Photo de profil" height="150">
                 </div>
-            </v-card-title>
-            <v-card-text>
+                <div> {{ user.first_name + " " + user.last_name }} </div>
+            </div>
+            <div class="cards-body">
                 <div>{{ user.bio }}</div>
-            </v-card-text>
-        </v-card>
+            </div>
+        </div>
     </main>
 </template>
 

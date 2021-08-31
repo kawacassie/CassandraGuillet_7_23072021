@@ -1,8 +1,36 @@
 <template>
     <main>
         <div class="container">
-            <div class="card">
-                <p>{{ first_name + " " + last_name }}</p>
+            <div class="one-card">
+                <div class="one-title">
+                    <p>{{ first_name + " " + last_name }}</p>
+                    <div class="one-img">
+                        <img v-if="avatar" :src="avatar" alt="Photo de profil" height="200">
+                        <img v-else src="../assets/default-avatar.png" alt="Photo de profil par défault" height="200">
+                        <form @submit.prevent="updateAvatar()" enctype="multipart/form-data">
+                            <p>Changer la photo de profil</p>
+                            <label for="File">Choisir une nouvelle photo</label>
+                            <input @change="onFileChange()" type="file" ref="file" name="image_url" id="File" accept=".jpg, .jpeg, .gif, .png, .webp" :class="{ 'is-invalid': submitted && !file }">
+                            <div v-show="submitted && !file">Une nouvelle photo est requise</div>
+                            <div class="form-footer">
+                                <input type="reset">
+                                <input type="submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="one-body">
+                    <p>{{ email }}</p>
+                    <p>{{ bio }}</p>
+                    <form @submit.prevent="updateBio()" enctype="multipart/form-data">
+                        <label for="bio">Bio : </label>
+                        <textarea name="bio" id="bio" v-model="bio" cols="50" rows="4" placeholder="Ajoutez des informations sur vous..."></textarea>
+                        <div class="form-footer">
+                            <input type="reset">
+                            <input type="submit">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
@@ -32,14 +60,12 @@ export default {
             this.file = this.$refs.file.files[0];
             this.avatar = URL.createObjectURL(this.file)
         },
-        updateAccount() {
+        updateAvatar() {
             this.submitted = true
             const formData = new FormData()
-            formData.append("image", this.file);
-            formData.set("bio", this.bio.toString());
+            formData.append("image_url", this.file);
             axios.put('http://localhost:3000/api/users/accounts/' + localStorage.getItem("userId"), formData, { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(function(response) {
-                this.bio = "",
                 localStorage.setItem("avatar", response.data.user.avatar)
                 Swal.fire({
                     text: "L'avatar a été mis à jour", 
@@ -56,6 +82,40 @@ export default {
                 let messageError = ""
                 switch (codeError) {
                     case "400" : messageError = "L'avatar n'a pas été mis à jour"; break
+                    case "401" : messageError = "Requête non-authentifiée"; break
+                }
+                Swal.fire({
+                    title: "Une erreur est survenue",
+                    text: messageError || error.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false, 
+                    timerProgressBar: true
+                })
+            })
+        },
+        updateBio(){
+            this.submitted = true
+            const formData = new FormData()
+            formData.set("bio", this.bio.toString());
+            axios.put('http://localhost:3000/api/users/accounts/' + localStorage.getItem("userId"), formData, { headers : { "Authorization" : localStorage.getItem("token")} })
+            .then(() => {
+                this.bio = ""
+                Swal.fire({
+                    text: "La bio a été mise à jour", 
+                    footer: "Redirection en cours...",
+                    icon: "success",
+                    timer: 1000, 
+                    showConfirmButton: false, 
+                    timerProgressBar: true, 
+                    willClose: () => { location.reload() }
+                })
+            })
+            .catch(function(error) {
+                const codeError = error.message.split("code ")[1]
+                let messageError = ""
+                switch (codeError) {
+                    case "400" : messageError = "La bio n'a pas été mise à jour"; break
                     case "401" : messageError = "Requête non-authentifiée"; break
                 }
                 Swal.fire({
