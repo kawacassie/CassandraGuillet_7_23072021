@@ -32,6 +32,14 @@
                     </form>
                 </div>
             </div>
+            <div id="delete-account">
+                <form enctype="multipart/form-data">
+                    <p><i class="fas fa-trash-alt"></i> Supprimer mon compte ?</p>
+                    <p>ATTENTION ! Cette action est irréversible ! <br> Vous ne pourrez plus vous connecter à ce compte, vos posts et commentaires seront supprimés !</p>
+                    <p>Êtes-vous certain de vouloir supprimer votre compte ?</p>
+                    <button type="submit" @click.prevent="deleteAccount()">Je supprime !</button>
+                </form>
+            </div>
         </div>
 
     </main>
@@ -48,7 +56,6 @@ export default {
             first_name: "",
             last_name: "",
             email: "",
-            createdAt: "",
             avatar: "",
             bio: "",
             file: null, 
@@ -166,7 +173,6 @@ export default {
             this.first_name = user.data.first_name
             this.last_name = user.data.last_name
             this.email = user.data.email
-            this.createdAt = user.data.createdAt.slice(0,10).split('-').reverse().join('/') + ' à ' + user.data.createdAt.slice(11,16)
             this.avatar = user.data.avatar
             this.bio = user.data.bio 
         })
