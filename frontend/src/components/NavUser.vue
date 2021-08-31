@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-        <img :src="avatar" alt="Image de profil" height="37">
-        <p>{{ first_name + " " + last_name }}</p>
+        <img v-if="avatar ==! null" :src="avatar" alt="Image de profil" height="40"> 
+        <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
+        <span id="user_name">{{ first_name + " " + last_name }}</span>
         <ul id="nav_user">
             <li><router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link></li>
             <li><router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link></li>
@@ -20,7 +21,7 @@ export default {
         return {
             first_name: "",
             last_name: "",
-            avatar: "./assets/default-avatar.png"
+            avatar: ""
         }
     },
     created: function() {
