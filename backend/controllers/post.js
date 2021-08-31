@@ -8,7 +8,7 @@ exports.getAllPosts = async (req, res) => {
   try {
     const posts = await database.Post.findAll({
       attributes: ["id", "title", "content", "image_url", "createdAt", "likes", "dislikes"],
-      order: [["createdAt", "DESC"]],
+      order: [["id", "DESC"]],
       include: [
         {
           model: database.User,
@@ -17,7 +17,7 @@ exports.getAllPosts = async (req, res) => {
         {
           model: database.Comment,
           attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
-          order: [["createdAt", "ASC"]],
+          order: [["id", "ASC"]],
           include: [
             {
               model: database.User,
@@ -84,7 +84,7 @@ exports.getOnePost = async (req, res) => {
         {
           model: database.Comment, 
           attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
-          order: [["createdAt", "ASC"]],
+          order: [["id", "ASC"]],
           include: [
             {
               model: database.User,
