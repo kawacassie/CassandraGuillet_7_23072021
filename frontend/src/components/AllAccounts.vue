@@ -4,7 +4,7 @@
             <v-card-title flat dense dark>
                 <v-avatar size="42px">
                     <img v-if="user.avatar" :src="user.avatar" alt="Photo de profil">
-                    <img v-else src="./assets/default-avatar.png" alt="Photo de profil">
+                    <img v-else src="../assets/default-avatar.png" alt="Photo de profil">
                 </v-avatar>
                 <div>
                     <span>{{ user.first_name }}</span>

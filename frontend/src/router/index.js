@@ -21,6 +21,16 @@ const routes = [
         path: '/posts',
         name: 'Posts',
         component: () => import('../components/Posts'),
+    }, 
+    {
+        path: '/accounts',
+        name: 'accounts',
+        component: () => import('../components/AllAccounts'),
+    },
+    {
+        path: '/accounts/:id',
+        name: 'account',
+        component: () => import('../components/OneAccount')
     }
 ]
 

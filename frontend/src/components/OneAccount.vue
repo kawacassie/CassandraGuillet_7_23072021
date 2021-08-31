@@ -2,7 +2,7 @@
     <main>
         <div class="container">
             <div class="card">
-                <p>{{ first_name + last_name }}</p>
+                <p>{{ first_name + " " + last_name }}</p>
             </div>
         </div>
 
