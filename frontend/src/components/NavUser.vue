@@ -21,7 +21,7 @@ export default {
         return {
             first_name: "",
             last_name: "",
-            avatar: ""
+            avatar: null
         }
     },
     created: function() {

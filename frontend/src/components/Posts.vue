@@ -17,7 +17,7 @@
         <div v-for="post in posts" :key="post.id" class="allposts">
             <div class="posts">
                 <div class="post-header">
-                    <img v-if="post.avatar ==! null" :src="post.avatar" alt="avatar utilisateur" height="40">
+                    <img v-if="post.User.avatar" :src="post.User.avatar" alt="avatar utilisateur" height="40">
                     <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
                     <span>
                         Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
