@@ -31,6 +31,20 @@
                     <img :src="post.image_url" alt="Image du post" v-if="post.image_url !== null">
                 </div>
                 <div class="post-footer">
+                    <div>
+                        <p v-if="post.Comments.length === 0">Il n'y a aucun commentaire.</p>
+                        <p v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
+                        <p v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
+
+                        <h4>Poster un commentaire : </h4>
+                        <form enctype="multipart/form-data">
+                            <label for="newComment">Commentaire : </label>
+                            <textarea name="newComment" id="newComment" cols="30" rows="5" v-model="newComment" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !newComment }"></textarea>
+                            <div v-show="submitted && !newComment">Un commentaire est requis</div>
+                            <input type="submit" @click.prevent="addComment()">
+                        </form>
+                    </div>
+
                     <!-- AJOUTER COMMENTAIRES ET LIKES ICI -->
                 </div>
             </div>
@@ -60,8 +74,13 @@ export default {
             content: "",
             image_url: "",
             userId: "",
+            first_name: "",
+            last_name: "",
             file: null,
             posts: [],
+            submitted: false,
+            newComment: "",
+            comments: []
 
         }
     },
@@ -109,6 +128,39 @@ export default {
                 })
             })
         },
+        addComment() {
+            this.submitted = true
+            const formData = new FormData()
+            formData.set("content", this.newComment.toString())
+            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            .then(()=> {
+                Swal.fire({
+                    text: "Commentaire ajouté !",
+                    footer: "Redirection en cours...",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willClose: () => { location.reload() }
+                })
+            })
+            .catch(function(error) {
+                const codeError = error.message.split("code ")[1]
+                let messageError = ""
+                switch (codeError){
+                    case "400": messageError = "Le commentaire n'a pas été ajouté !"; break
+                    case "401": messageError = "Requête non-authentifiée !"; break
+                }
+                Swal.fire({
+                    title: "Une erreur est survenue",
+                    text: messageError || error.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false,
+                    timerProgressBar: true
+                })  
+            })
+        }
     },
     created: function() {
         this.is_admin = localStorage.getItem("is_admin")

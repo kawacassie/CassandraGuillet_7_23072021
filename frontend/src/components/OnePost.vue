@@ -3,17 +3,17 @@
         <div class="container">
             <h2>Modifier le post : </h2>
             <form method="POST" enctype="multipart/form-data" class="form-group">
-            <label for="title">Nouveau titre : </label>
-            <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le nouveau titre de votre post ici..."></textarea>
-            <label for="newPost">Noueau contenu du post : </label>
-            <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre nouveau texte ici..."></textarea>
-            <label for="File">Choisir une nouvelle image : </label>
-            <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
-            <div class="form-footer">
-                <input type="reset">
-                <input type="submit" @click.prevent="modifyPost()">
-            </div>
-        </form>
+                <label for="title">Nouveau titre : </label>
+                <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le nouveau titre de votre post ici..."></textarea>
+                <label for="newPost">Nouveau contenu du post : </label>
+                <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre nouveau texte ici..."></textarea>
+                <label for="File">Choisir une nouvelle image : </label>
+                <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
+                <div class="form-footer">
+                    <input type="reset">
+                    <input type="submit" @click.prevent="modifyPost()">
+                </div>
+            </form>
 
             <div id="delete-post">
                 <form enctype="multipart/form-data">
@@ -40,6 +40,7 @@ export default {
             title: "",
             content: "",
             image_url: "",
+            UserId: "",
             file: null, 
             submitted: false,
         }
@@ -125,6 +126,7 @@ export default {
             this.title = post.data.title
             this.content = post.data.content
             this.image_url = post.data.image_url
+            this.UserId = post.data.UserId
         })
         .catch(function(error) {
             const codeError = error.message.split("code ")[1]
