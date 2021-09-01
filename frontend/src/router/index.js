@@ -23,6 +23,11 @@ const routes = [
         component: () => import('../components/Posts'),
     }, 
     {
+        path: '/posts/:id',
+        name: 'OnePost',
+        component: () => import('../components/OnePost'),
+    },
+    {
         path: '/accounts',
         name: 'accounts',
         component: () => import('../components/AllAccounts'),
