@@ -19,13 +19,11 @@
                 <div class="post-header">
                     <img v-if="post.User.avatar" :src="post.User.avatar" alt="avatar utilisateur" height="40">
                     <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
-                    <span>
-                        Posté par {{ post.User.first_name + " " + post.User.last_name }} <br>
-                    </span>
+                    <span> Posté par {{ post.User.first_name + " " + post.User.last_name }} </span> {{ post.id }}
                 </div>
-                <div v-if="post.User.id === this.UserId || this.is_admin === 'true'">
-                    <a href="'#/posts/' + post.id "><i class="fas fa-edit"></i> Éditer le post</a>
-                    <button @click="deletePost(postId)"><i class="fas fa-trash-alt"></i> Supprimer le post</button>
+                <div v-if="post.User.id == this.userId || this.is_admin == 'true'">
+                    <router-link to="/posts/:id"><i class="fas fa-edit"></i> Éditer le post</router-link>
+                    <router-link to="/posts/:id"><i class="fas fa-trash-alt"></i> Supprimer le post</router-link>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -61,7 +59,7 @@ export default {
             title: "",
             content: "",
             image_url: "",
-            UserId: "",
+            userId: "",
             file: null,
             posts: [],
 
@@ -75,12 +73,12 @@ export default {
         createPost(){
             const formData = new FormData()
             formData.set("image_url", this.file)
-            formData.set("UserId", this.UserId.toString())
+            formData.set("userId", this.userId.toString())
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
             axios.post("http://localhost:3000/api/posts/add", formData, { headers: { "Authorization": localStorage.getItem("token")} })
             .then(() => {
-                this.UserId = ""
+                this.userId = ""
                 this.title = ""
                 this.content = ""
                 this.file = null
@@ -111,48 +109,10 @@ export default {
                 })
             })
         },
-        deletePost(postId){
-            if (confirm("La suppression d'une publication est irréversible, voulez-vous continuer ?")){
-                fetch("http://localhost:3000/api/posts/" + this.post.id, {
-                    body: JSON.stringify({ post_id: postId}),
-                    method: "delete",
-                    headers: {
-                        "Authorization": localStorage.getItem("token")
-                    },
-                })
-                .then(() => {
-                    Swal.fire({
-                        text: "Post supprimé",
-                        footer: "Redirection en cours...",
-                        icon: "success",
-                        timer: 2000,
-                        showConfirmButton: false,
-                        timerProgressBar: true, 
-                        willClose: () => { location.reload() }
-                    })
-                })
-                .catch((error) => {
-                    const codeError = error.message.split("code ")[1]
-                    let messageError = ""
-                    switch (codeError){
-                        case "400": messageError = "Le post n'a pas pu être supprimé"; break
-                        case "401": messageError = "Requête non-authentifiée"; break
-                    }
-                    Swal.fire({
-                        title: "Une erreur est survenue",
-                        text: messageError || error.message,
-                        icon: "error",
-                        timer: 3500,
-                        showConfirmButton: false, 
-                        timerProgressBar: true
-                    })
-                })
-            }
-        }
     },
     created: function() {
-        this.isAdmin = localStorage.getItem("is_admin")
-        this.UserId = localStorage.getItem("userId")
+        this.is_admin = localStorage.getItem("is_admin")
+        this.userId = localStorage.getItem("userId")
         if (localStorage.getItem("refresh") === null) {
             localStorage.setItem("refresh", 0)
             location.reload()
