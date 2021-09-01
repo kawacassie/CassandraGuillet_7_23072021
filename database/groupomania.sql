@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : sam. 28 août 2021 à 16:43
+-- Généré le : mer. 01 sep. 2021 à 15:22
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -32,8 +32,6 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `PostId` int UNSIGNED NOT NULL,
   `UserId` int UNSIGNED NOT NULL,
-  `first_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `last_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `content` varchar(255) NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -58,9 +56,22 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `likes` smallint DEFAULT '0',
   `dislikes` smallint DEFAULT '0',
+  `usersLiked` int DEFAULT NULL,
+  `usersDisliked` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`UserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `posts`
+--
+
+INSERT INTO `posts` (`id`, `UserId`, `title`, `content`, `image_url`, `createdAt`, `updatedAt`, `likes`, `dislikes`, `usersLiked`, `usersDisliked`) VALUES
+(4, 24, 'Exemple Titre 1', 'Contenu exemple 1 (post sans image)', NULL, '0000-00-00 00:00:00', '2021-08-28 18:39:33', 0, 0, NULL, NULL),
+(5, 23, 'Exemple 2', 'Toujours sans image ', NULL, '0000-00-00 00:00:00', '2021-08-29 09:56:45', 0, 0, NULL, NULL),
+(6, 23, 'Essai Image', 'Essai image contenu', 'http://localhost:3000/images/Pomme_empoisonnee.jpg1630231778512.jpg', '0000-00-00 00:00:00', '2021-08-29 10:09:38', 0, 0, NULL, NULL),
+(8, 29, 'Créer un post', 'Tester suppression post', NULL, '0000-00-00 00:00:00', '2021-08-31 12:54:14', 0, 0, NULL, NULL),
+(9, 29, 'Création post', 'Nouveau post ', NULL, '0000-00-00 00:00:00', '2021-09-01 08:50:52', 0, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
@@ -90,8 +101,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `bio`, `is_admin`, `createdAt`, `updatedAt`) VALUES
 (1, 'admin', 'admin', 'admin@mail.com', '$2b$10$jhcLz7Pmtg3cShtUo0Xl8uoSjJBY8FQHQU00lyINBSJTMexKSG2hS', NULL, NULL, 1, '2021-08-01 19:25:03', '2021-08-01 19:25:03'),
-(19, 'Marin', 'Dubois', 'marindubois@mail.com', '$2b$10$L5l5hAY1KprOSKhD7arjTeQpH7LX5xKFCG6dmf7tBwklMRd6Kw8H2', NULL, NULL, 0, '2021-08-23 08:45:29', '2021-08-23 08:45:29'),
-(22, 'Martine', 'Boulanger', 'martineboulanger@mail.com', '$2b$10$NmfHZpuG4MBic0wX0FR0JOpm2x.VyL35rDvAh4A0hl7XHYud.KuqS', NULL, NULL, 0, '2021-08-23 08:54:35', '2021-08-23 08:54:35');
+(23, 'Martine', 'Boulanger', 'martineboulanger@mail.com', '$2b$10$R9XR4ktFG8r8KvJ8UdiY7OC4JblnoXkb5OBQPIqswS0N97VcswDS.', 'http://localhost:3000/images/Chateau_Disney.jpg1630403758596.jpg', 'Changer ma bio ', 0, '2021-08-28 18:25:35', '2021-08-31 10:05:12'),
+(24, 'Pierre', 'Dupont', 'dupontpierre@mail.com', '$2b$10$R.swPUQZQGauCDsJQlpX8uUo6W9zyehGRi/nLvoRhvfiyy3iEXTee', NULL, NULL, 0, '2021-08-28 18:39:02', '2021-08-28 18:39:02'),
+(25, 'Cassandra', 'Guillet', 'cassandraguillet@gmail.com', '$2b$10$i4GlBY/Lt1juRfzxy5pJzOksUq8s6.gm5LdSQ3YNNSNz66hyfYEqe', NULL, NULL, 0, '2021-08-29 09:22:08', '2021-08-29 09:22:08'),
+(29, 'Arsene', 'Lupin', 'arsenelupin@mail.com', '$2b$10$bibRFezBH6gA1PN9tO/ZkukasTkfqC9OdMKcuNdtKl9SF00YTWEqy', NULL, NULL, 0, '2021-08-31 12:42:21', '2021-08-31 12:42:21');
 
 --
 -- Contraintes pour les tables déchargées

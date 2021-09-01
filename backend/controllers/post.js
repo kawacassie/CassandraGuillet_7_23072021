@@ -16,7 +16,7 @@ exports.getAllPosts = async (req, res) => {
         },
         {
           model: database.Comment,
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
+          attributes: ["id", "content", "UserId", "createdAt"],
           order: [["id", "ASC"]],
           include: [
             {
@@ -83,7 +83,7 @@ exports.getOnePost = async (req, res) => {
         },
         {
           model: database.Comment, 
-          attributes: ["id", "content", "UserId", "first_name", "last_name", "createdAt"],
+          attributes: ["id", "content", "UserId", "createdAt"],
           order: [["id", "ASC"]],
           include: [
             {
@@ -97,7 +97,7 @@ exports.getOnePost = async (req, res) => {
     });
     res.status(200).json(post);
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };
 
@@ -133,7 +133,7 @@ exports.modifyPost = async (req, res) => {
       res.status(400).json({ message: "Vous n'avez pas les droits requis"});
     }
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error});
   }
 };
 
@@ -158,7 +158,7 @@ exports.deletePost = async (req, res) => {
       res.status(400).json({ message: "Vous n'avez pas les droits requis"});
     }
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };
 
@@ -193,18 +193,14 @@ exports.likeOrDislike = (req, res, next) => {
 exports.addComment = async (req, res) => {
   try {
     const comment = req.body.commentContent;
-    const first_name = req.body.commentFirst_name; 
-    const last_name = req.body.commentLast_name; 
     const newComment = await database.Comment.create({
       content: comment,
-      first_name: first_name,
-      last_name: last_name,
       UserId: token.getUserId(req),
       PostId: req.params.id,
     });
     res.status(201).json({ newComment, messageRetour: "Commentaire ajouté" });
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };
 
@@ -221,6 +217,6 @@ exports.deleteComment = async (req, res) => {
       res.status(400).json({message: "Vous n'avez pas les droits requis"});
     }
   } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" });
+    return res.status(500).send({ error: "Erreur serveur" + error });
   }
 };

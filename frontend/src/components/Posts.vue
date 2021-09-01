@@ -1,5 +1,6 @@
 <template>
     <main>
+        <!-- AJOUTER NOUVEAU POST -->
         <h2>Ajouter un nouveau post :</h2> 
         <form method="POST" enctype="multipart/form-data" class="form-group">
             <label for="title">Titre : </label>
@@ -14,6 +15,7 @@
             </div>
         </form>
 
+        <!-- AFFICHER LES POSTS --> 
         <div v-for="post in posts" :key="post.id" class="allposts">
             <div class="posts">
                 <div class="post-header">
@@ -30,11 +32,34 @@
                     <p>{{ post.content }}</p>
                     <img :src="post.image_url" alt="Image du post" v-if="post.image_url !== null">
                 </div>
+                <!-- PARTIE COMMENTAIRES --> 
                 <div class="post-footer">
-                    <!-- AJOUTER COMMENTAIRES ET LIKES ICI -->
+                    <div>
+                        <p v-if="post.Comments.length === 0">Il n'y a aucun commentaire.</p>
+                        <p v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
+                        <p v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
+
+                        <h4>Poster un commentaire : </h4>
+                        <form enctype="multipart/form-data">
+                            <label for="newComment">Commentaire : </label>
+                            <textarea name="newComment" id="newComment" cols="30" rows="5" v-model="content" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !newComment }"></textarea>
+                            <div v-show="submitted && !newComment">Un commentaire est requis</div>
+                            <input type="submit" @click.prevent="addComment()">
+                        </form>
+
+                        <div v-for="comment in comments" :key="comment.id">
+                            <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
+                            <p>{{ comment.content }}</p>
+                            <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
+                        </div>
+                    </div>
+
+                    <!-- AJOUTER LIKES ICI -->
                 </div>
             </div>
         </div>
+
+        <!-- PAS DE POST OU FIN DES POSTS -->
         <NoPost v-if="NoPost === true"></NoPost>
         <div class="card-footer">
             <p>Il n'y a pas de message plus ancien que celui au-dessus...</p>
@@ -60,8 +85,13 @@ export default {
             content: "",
             image_url: "",
             userId: "",
+            first_name: "",
+            last_name: "",
             file: null,
             posts: [],
+            submitted: false,
+            newComment: "",
+            comments: []
 
         }
     },
@@ -109,6 +139,39 @@ export default {
                 })
             })
         },
+        addComment() {
+            this.submitted = true
+            const formData = new FormData()
+            formData.set("content", this.content.toString())
+            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            .then(()=> {
+                Swal.fire({
+                    text: "Commentaire ajouté !",
+                    footer: "Redirection en cours...",
+                    icon: "success",
+                    timer: 1000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    willClose: () => { location.reload() }
+                })
+            })
+            .catch(function(error) {
+                const codeError = error.message.split("code ")[1]
+                let messageError = ""
+                switch (codeError){
+                    case "400": messageError = "Le commentaire n'a pas été ajouté !"; break
+                    case "401": messageError = "Requête non-authentifiée !"; break
+                }
+                Swal.fire({
+                    title: "Une erreur est survenue",
+                    text: messageError || error.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false,
+                    timerProgressBar: true
+                })  
+            })
+        }
     },
     created: function() {
         this.is_admin = localStorage.getItem("is_admin")
