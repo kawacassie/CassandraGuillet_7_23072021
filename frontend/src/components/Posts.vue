@@ -41,15 +41,15 @@
 
                         <h4>Poster un commentaire : </h4>
                         <form enctype="multipart/form-data">
-                            <label for="newComment">Commentaire : </label>
-                            <textarea name="newComment" id="newComment" cols="30" rows="5" v-model="content" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !newComment }"></textarea>
-                            <div v-show="submitted && !newComment">Un commentaire est requis</div>
-                            <input type="submit" @click.prevent="addComment()">
+                            <label :for="'commenting post number' + post.id">Commentaire : </label>
+                            <textarea name="comment" :id="'commenting post number' + post.id" cols="30" rows="5" v-model="comment" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !comment }"></textarea>
+                            <div v-show="submitted && !comment">Un commentaire est requis</div>
+                            <input type="submit" @click.prevent="addComment(post.id)">
                         </form>
 
                         <div v-for="comment in comments" :key="comment.id">
                             <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
-                            <p>{{ comment.content }}</p>
+                            <p>{{ comment.comment }}</p>
                             <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
                         </div>
                     </div>
@@ -90,7 +90,7 @@ export default {
             file: null,
             posts: [],
             submitted: false,
-            newComment: "",
+            comment: "",
             comments: []
 
         }
@@ -139,11 +139,10 @@ export default {
                 })
             })
         },
-        addComment() {
+        addComment(id) {
             this.submitted = true
-            const formData = new FormData()
-            formData.set("content", this.content.toString())
-            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            this.id = id
+            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.comment }, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 Swal.fire({
                     text: "Commentaire ajouté !",
