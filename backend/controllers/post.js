@@ -16,7 +16,7 @@ exports.getAllPosts = async (req, res) => {
         },
         {
           model: database.Comment,
-          attributes: ["id", "content", "UserId", "createdAt"],
+          attributes: ["id", "comment", "UserId", "createdAt"],
           order: [["id", "ASC"]],
           include: [
             {
@@ -83,7 +83,7 @@ exports.getOnePost = async (req, res) => {
         },
         {
           model: database.Comment, 
-          attributes: ["id", "content", "UserId", "createdAt"],
+          attributes: ["id", "comment", "UserId", "createdAt"],
           order: [["id", "ASC"]],
           include: [
             {
@@ -192,9 +192,9 @@ exports.likeOrDislike = (req, res, next) => {
 // Ajout d'un commentaire
 exports.addComment = async (req, res) => {
   try {
-    const comment = req.body.commentContent;
+    const comment = req.body.commentComment;
     const newComment = await database.Comment.create({
-      content: comment,
+      comment: comment,
       UserId: token.getUserId(req),
       PostId: req.params.id,
     });
