@@ -56,7 +56,7 @@ export default {
             formData.set("title", this.title.toString())
             formData.set("content", this.content.toString())
             formData.set("image_url", this.file);
-            axios.put('http://localhost:3000/api/posts/' + this.$route.params.id, formData, { headers : { "Authorization" : localStorage.getItem("token")} })
+            axios.put('http://localhost:3000/api/posts/' + localStorage.getItem("PostId"), formData, { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(response => {
                 if (response.status === 200) {
                     Swal.fire({
@@ -66,7 +66,7 @@ export default {
                         timer: 1000, 
                         showConfirmButton: false, 
                         timerProgressBar: true, 
-                        willClose: () => { location.reload() }
+                        willClose: () => { router.push("/posts") }
                     })
                 }
             })
@@ -88,7 +88,7 @@ export default {
             })
         },
         deletePost() {
-            axios.delete('http://localhost:3000/api/posts/' + this.$route.params.id, { headers : { "Authorization" : localStorage.getItem("token")} })
+            axios.delete('http://localhost:3000/api/posts/' + localStorage.getItem("PostId"), { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(response => {
                 if (response.status === 200) { 
                     Swal.fire({
@@ -121,7 +121,7 @@ export default {
         }
     },
     created: function() {
-        axios.get('http://localhost:3000/api/posts/' + this.$route.params.id, { headers : { "Authorization" : localStorage.getItem("token")} })
+        axios.get('http://localhost:3000/api/posts/' + localStorage.getItem("PostId"), { headers : { "Authorization" : localStorage.getItem("token")} })
         .then(post => {
             this.title = post.data.title
             this.content = post.data.content

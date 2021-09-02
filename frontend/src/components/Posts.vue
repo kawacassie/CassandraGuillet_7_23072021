@@ -24,8 +24,8 @@
                     <span> Posté par {{ post.User.first_name + " " + post.User.last_name }} </span> {{ post.id }}
                 </div>
                 <div v-if="post.User.id == this.userId || this.is_admin == 'true'">
-                    <router-link to="/posts/:id"><i class="fas fa-edit"></i> Éditer le post</router-link>
-                    <router-link to="/posts/:id"><i class="fas fa-trash-alt"></i> Supprimer le post</router-link>
+                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-edit"></i> Éditer le post</router-link>
+                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</router-link>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -138,6 +138,11 @@ export default {
                     timerProgressBar: true
                 })
             })
+        },
+        getPostId(id) {
+            this.id = id
+            localStorage.setItem("PostId", this.id)
+            console.log(localStorage)
         },
         addComment(id) {
             this.submitted = true
