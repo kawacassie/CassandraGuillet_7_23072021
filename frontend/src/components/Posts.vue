@@ -1,19 +1,23 @@
 <template>
     <main>
         <!-- AJOUTER NOUVEAU POST -->
-        <h2>Ajouter un nouveau post :</h2> 
-        <form method="POST" enctype="multipart/form-data" class="form-group">
-            <label for="title">Titre : </label>
-            <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le titre de votre post ici..."></textarea>
-            <label for="newPost">Contenu du post : </label>
-            <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre texte ici..."></textarea>
-            <label for="File">Choisir une nouvelle image : </label>
-            <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
-            <div class="form-footer">
-                <input type="reset">
-                <input type="submit" @click.prevent="createPost()">
-            </div>
-        </form>
+        <div>
+            <a id="lien-formulaire-post" @click="masquerDiv('formulaire-post')"><i class="fas fa-plus"></i> Ajouter un nouveau post</a> 
+        </div>
+        <div id="formulaire-post">
+            <form method="POST" enctype="multipart/form-data" class="form-group">
+                <label for="title">Titre : </label>
+                <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le titre de votre post ici..."></textarea>
+                <label for="newPost">Contenu du post : </label>
+                <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre texte ici..."></textarea>
+                <label for="File">Choisir une nouvelle image : </label>
+                <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
+                <div class="form-footer">
+                    <input type="reset">
+                    <input type="submit" @click.prevent="createPost()">
+                </div>
+            </form>
+        </div>
 
         <!-- AFFICHER LES POSTS --> 
         <div v-for="post in posts" :key="post.id" class="allposts">
@@ -99,6 +103,15 @@ export default {
         onFileChange() {
             this.file = this.$refs.file.files[0];
             this.image_url = URL.createObjectURL(this.file)
+        },
+        masquerDiv(id) {
+            if (document.getElementById(id).style.display =='block') 
+            {
+                document.getElementById(id).style.display = 'none';
+            }
+            else {
+                document.getElementById(id).style.display = 'block';
+            }
         },
         createPost(){
             const formData = new FormData()

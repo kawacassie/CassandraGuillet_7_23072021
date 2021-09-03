@@ -1,17 +1,39 @@
 <template>
     <main>
-        <div class="container">
+        <div class="container-account">
             <div class="one-card">
                 <div class="one-title">
-                    <p>{{ first_name + " " + last_name }}</p>
+                    <p class="card-info">{{ first_name + " " + last_name }}</p>
                     <div class="one-img">
                         <img v-if="avatar" :src="avatar" alt="Photo de profil" height="200">
                         <img v-else src="../assets/default-avatar.png" alt="Photo de profil par défault" height="200">
+                        <div>
+                            <a id="lien-formulaire-avatar" @click="masquerDiv('formulaire-avatar')"><i class="fas fa-edit"></i> Changer la photo de profil</a>
+                        </div>
                         <form @submit.prevent="updateAvatar()" enctype="multipart/form-data">
-                            <p>Changer la photo de profil</p>
-                            <label for="File">Choisir une nouvelle photo</label>
-                            <input @change="onFileChange()" type="file" ref="file" name="image_url" id="File" accept=".jpg, .jpeg, .gif, .png, .webp" :class="{ 'is-invalid': submitted && !file }">
-                            <div v-show="submitted && !file">Une nouvelle photo est requise</div>
+                            <div id="formulaire-avatar">
+                                <label for="File">Choisir une nouvelle photo : </label>
+                                <input @change="onFileChange()" type="file" ref="file" name="image_url" id="File" accept=".jpg, .jpeg, .gif, .png, .webp" :class="{ 'is-invalid': submitted && !file }">
+                                <div v-show="submitted && !file">Une nouvelle photo est requise</div>
+                                <div class="form-footer">
+                                    <input type="reset">
+                                    <input type="submit">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="one-body">
+                    <p class="card-info">Informations :</p>
+                    <p>{{ email }}</p>
+                    <p>{{ bio }}</p>
+                    <div>
+                        <a id="lien-formulaire-bio" @click="masquerDiv('formulaire-bio')"><i class="fas fa-edit"></i> Changer la bio</a>
+                    </div>
+                    <div id="formulaire-bio">
+                        <form @submit.prevent="updateBio()" enctype="multipart/form-data">
+                            <label for="bio">Modifier la bio : </label>
+                            <textarea name="bio" id="bio" v-model="bio" cols="50" rows="4" placeholder="Ajoutez des informations sur vous..."></textarea>
                             <div class="form-footer">
                                 <input type="reset">
                                 <input type="submit">
@@ -19,22 +41,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="one-body">
-                    <p>{{ email }}</p>
-                    <p>{{ bio }}</p>
-                    <form @submit.prevent="updateBio()" enctype="multipart/form-data">
-                        <label for="bio">Bio : </label>
-                        <textarea name="bio" id="bio" v-model="bio" cols="50" rows="4" placeholder="Ajoutez des informations sur vous..."></textarea>
-                        <div class="form-footer">
-                            <input type="reset">
-                            <input type="submit">
-                        </div>
-                    </form>
-                </div>
+            </div>
+            <div>
+                <a id="lien-delete-account" @click="masquerDiv('delete-account')"><i class="fas fa-trash-alt"></i> Supprimer mon compte ?</a>
             </div>
             <div id="delete-account">
                 <form enctype="multipart/form-data">
-                    <p><i class="fas fa-trash-alt"></i> Supprimer mon compte ?</p>
                     <p>ATTENTION ! Cette action est irréversible ! <br> Vous ne pourrez plus vous connecter à ce compte, vos posts et commentaires seront supprimés !</p>
                     <p>Êtes-vous certain de vouloir supprimer votre compte ?</p>
                     <button type="submit" @click.prevent="deleteAccount()">Je supprime !</button>
@@ -66,6 +78,15 @@ export default {
         onFileChange(){
             this.file = this.$refs.file.files[0];
             this.avatar = URL.createObjectURL(this.file)
+        },
+        masquerDiv(id) {
+            if (document.getElementById(id).style.display =='block') 
+            {
+                document.getElementById(id).style.display = 'none';
+            }
+            else {
+                document.getElementById(id).style.display = 'block';
+            }
         },
         updateAvatar() {
             this.submitted = true

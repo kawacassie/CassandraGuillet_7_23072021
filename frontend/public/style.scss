@@ -6,22 +6,42 @@ main {
 
 header {
     background-color: #FFD7D7;
-    padding-top: 3em;
-    padding-bottom: 3em;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    padding-left: 0.5em;
     margin-top: -3em;
+}
+
+nav .container {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
 
 nav {
     display: flex;
     flex-direction: column;
+    align-items: baseline;
 }
 
 nav a {
     font-size: 0.9em;
     padding-right: 2em;
+    cursor: pointer;
+}
+
+#masque_nav {
+    margin-left: -2em;
+}
+
+#nav_hidden {
+    display: none;
 }
 
 #nav_user {
+    background-color: #FFD7D7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,12 +163,13 @@ a, i {
 }
 
 .posts {
-    background-color: blueviolet;
     width: 95%;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
 }
 
 .allposts {
@@ -167,11 +188,10 @@ a, i {
 }
 
 .all-cards {
-    box-shadow: 4px 6px 8px 0 rgba(0,0,0,0.4);
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
     width: 95%;
     padding: 1em;
     margin: 0.5em;
-    background-color: #FFD7D7;
     border-radius: 1.5em 1.5em 1.5em 1.5em;
 }
 
@@ -191,6 +211,74 @@ a, i {
 
 .cards-body {
     font-size: 1em;
+}
+
+.one-card {
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1em;
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
+}
+
+.one-title {
+    width: 95%;
+}
+
+.card-info {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#lien-formulaire-avatar {
+    width: 95%;
+    background-color: #FFD7D7;
+    margin-top: 1em;
+    padding: 0.8em;
+    font-weight: normal;
+    font-size: 0.8em;
+    border-radius: 2em;
+    box-shadow: 0.2em 0.2em 0.5em grey;  
+}
+
+#lien-formulaire-bio, #lien-delete-account {
+    width: 95%;
+    background-color: #FFD7D7;
+    margin-top: 1em;
+    padding: 0.8em;
+    font-weight: normal;
+    font-size: 0.9em;
+    border-radius: 2em;
+    box-shadow: 0.2em 0.2em 0.5em grey; 
+}
+
+#lien-formulaire-post {
+    width: 95%;
+    background-color: #FFD7D7;
+    margin-top: 1em;
+    padding: 0.8em;
+    font-weight: normal;
+    font-size: 1.2em;
+    border-radius: 2em;
+    box-shadow: 0.2em 0.2em 0.5em grey; 
+}
+
+#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover {
+    opacity: 70%;
+	transition: .3s ease-in-out;
+    cursor: pointer;
+}
+
+#formulaire-avatar, #formulaire-bio {
+    display: none;
+    font-size: 0.9em;
+}
+
+#delete-account, #formulaire-post {
+    display: none;
 }
 
 footer a {
@@ -220,13 +308,31 @@ footer a {
         justify-content: space-around;
     }
 
+    #masque_nav {
+        margin-left: 1em;
+        margin-top: 0.5em;
+    }
+
+    nav .container {
+        flex-direction: row;
+    }
+
     #nav_user {
         display: flex;
         flex-direction: row;
     }
 
+    .logo_nav {
+        padding-top: 0.8em;
+        padding-left: 1em;
+    }
+
     button {
         width: 15%;
+    }
+
+    #lien-formulaire-avatar {
+        width: 50%;
     }
 
     input {
@@ -237,13 +343,26 @@ footer a {
         width: 50%;
     }
 
+    #bio {
+        width: 100%;
+    }
+
     .posts {
-        background-color: blueviolet;
         width: 65%;
     }
 
     .post-body img {
         height: 500px;
+    }
+
+    .one-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .one-title {
+        width: 40%;
     }
 
     .all-cards {

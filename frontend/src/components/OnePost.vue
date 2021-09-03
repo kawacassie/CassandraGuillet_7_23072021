@@ -23,6 +23,10 @@
                     <button type="submit" @click.prevent="deletePost()">Je supprime !</button>
                 </form>
             </div>
+
+            <div id="retour-posts">
+                <router-link to="/posts"><i class="fas fa-undo-alt"></i> Retour</router-link>
+            </div>
         </div>
 
     </main>
