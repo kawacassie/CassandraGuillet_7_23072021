@@ -163,12 +163,13 @@ a, i {
 }
 
 .posts {
-    background-color: blueviolet;
     width: 95%;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
     display: flex;
     flex-direction: column;
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
 }
 
 .allposts {
@@ -187,11 +188,10 @@ a, i {
 }
 
 .all-cards {
-    box-shadow: 4px 6px 8px 0 rgba(0,0,0,0.4);
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
     width: 95%;
     padding: 1em;
     margin: 0.5em;
-    background-color: #FFD7D7;
     border-radius: 1.5em 1.5em 1.5em 1.5em;
 }
 
@@ -255,7 +255,18 @@ a, i {
     box-shadow: 0.2em 0.2em 0.5em grey; 
 }
 
-#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover {
+#lien-formulaire-post {
+    width: 95%;
+    background-color: #FFD7D7;
+    margin-top: 1em;
+    padding: 0.8em;
+    font-weight: normal;
+    font-size: 1.2em;
+    border-radius: 2em;
+    box-shadow: 0.2em 0.2em 0.5em grey; 
+}
+
+#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover {
     opacity: 70%;
 	transition: .3s ease-in-out;
     cursor: pointer;
@@ -266,7 +277,7 @@ a, i {
     font-size: 0.9em;
 }
 
-#delete-account {
+#delete-account, #formulaire-post {
     display: none;
 }
 
@@ -337,7 +348,6 @@ footer a {
     }
 
     .posts {
-        background-color: blueviolet;
         width: 65%;
     }
 
