@@ -162,6 +162,14 @@ a, i {
     font-size: 1.1em;
 }
 
+.space {
+    margin-bottom: 3em;
+}
+
+.s-size {
+    font-size: 0.8em;
+}
+
 .posts {
     width: 95%;
     padding-top: 0.2em;
@@ -175,6 +183,38 @@ a, i {
 .allposts {
     display: flex;
     justify-content: center;
+}
+
+#edit-delete {
+    margin-right: 1em;
+}
+
+#edit-delete i {
+    margin-bottom: 0.8em;
+}
+
+.post-header {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    background-color: #FFD7D7;
+    border-radius: 1.5em 1.5em 0em 0em;
+    margin-top: -0.3em;
+}
+
+.post-footer {
+    background-color: #FFD7D7;
+    border-radius: 0em 0em 1.5em 1.5em;
+    margin-bottom: -0.3em;
+}
+
+.img-name, .post-name {
+    margin-top: 0.5em;
+}
+
+.post-name {
+    margin-left: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .post-body img {
@@ -234,7 +274,7 @@ a, i {
     font-weight: bold;
 }
 
-#lien-formulaire-avatar, #lien-formulaire-bio, #lien-delete-account, #lien-formulaire-post, #lien-edit-post, #lien-delete-post {
+#lien-formulaire-avatar, #lien-formulaire-bio, #lien-delete-account, #lien-formulaire-post, #lien-edit-post, #lien-delete-post, #lien-formulaire-comment {
     width: 95%;
     background-color: #FFD7D7;
     margin-top: 1em;
@@ -244,7 +284,7 @@ a, i {
     box-shadow: 0.2em 0.2em 0.5em grey;  
 }
 
-#lien-formulaire-avatar {
+#lien-formulaire-avatar, #lien-formulaire-comment {
     font-size: 0.8em;
 }
 
@@ -256,13 +296,13 @@ a, i {
     font-size: 1.2em;
 }
 
-#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover, #lien-edit-post:hover, #lien-delete-post:hover {
+#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover, #lien-edit-post:hover, #lien-delete-post:hover, #lien-formulaire-comment:hover {
     opacity: 70%;
 	transition: .3s ease-in-out;
     cursor: pointer;
 }
 
-#formulaire-avatar, #formulaire-bio {
+#formulaire-avatar, #formulaire-bio, #formulaire-comment {
     display: none;
     font-size: 0.9em;
 }
@@ -326,6 +366,10 @@ footer a {
         width: 50%;
     }
 
+    #formulaire-comment textarea {
+        width: 90%;
+    }
+
     #bio {
         width: 100%;
     }
@@ -333,6 +377,12 @@ footer a {
     .posts {
         width: 65%;
     }
+
+    .post-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
 
     .post-body img {
         width: 70%;
