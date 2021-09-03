@@ -274,6 +274,12 @@ a, i {
     font-weight: bold;
 }
 
+#form-comment {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
 #lien-formulaire-avatar, #lien-formulaire-bio, #lien-delete-account, #lien-formulaire-post, #lien-edit-post, #lien-delete-post, #lien-formulaire-comment {
     width: 95%;
     background-color: #FFD7D7;

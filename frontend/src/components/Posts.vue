@@ -51,7 +51,7 @@
                             <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
                         </div>
                         <div id="formulaire-comment">
-                            <form enctype="multipart/form-data">
+                            <form id="form-comment" enctype="multipart/form-data">
                                 <label :for="'commenting post number' + post.id">Commentaire : </label>
                                 <textarea name="comment" :id="'commenting post number' + post.id" cols="30" rows="3" v-model="comment" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !comment }"></textarea>
                                 <div v-show="submitted && !comment">Un commentaire est requis</div>
