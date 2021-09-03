@@ -6,14 +6,24 @@ main {
 
 header {
     background-color: #FFD7D7;
-    padding-top: 3em;
-    padding-bottom: 3em;
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    padding-left: 0.5em;
     margin-top: -3em;
+}
+
+nav .container {
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
 }
 
 nav {
     display: flex;
     flex-direction: column;
+    align-items: baseline;
 }
 
 nav a {
@@ -21,7 +31,39 @@ nav a {
     padding-right: 2em;
 }
 
+#nav_deroulant, #nav_deroulant ul{
+    padding-top: 0.5em;
+    padding-left: 2.5em;
+    margin: 0;
+    list-style: none;
+}
+
+#nav_deroulant {
+    text-align: center;
+}
+
+#nav_deroulant li {
+    display: inline-block;
+    position: relative;
+}
+
+#nav_deroulant ul li {
+    display: inherit;
+}
+
+#nav_deroulant ul {
+    position: absolute;
+    left: -999em;
+    text-align: left;
+    z-index: 1000;
+}
+
+#nav_deroulant li:hover ul {
+    left: auto;
+}
+
 #nav_user {
+    background-color: #FFD7D7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -214,16 +256,21 @@ footer a {
         padding-bottom: 0.5em;
     }
 
+    #nav_deroulant, #nav_deroulant ul{
+        padding-left: 5em;
+
+    }
+
     nav {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
     }
 
-    #nav_user {
-        display: flex;
-        flex-direction: row;
-    }
+    //#nav_user {
+    //    display: flex;
+    //    flex-direction: row;
+    //}
 
     button {
         width: 15%;
