@@ -52,9 +52,9 @@
                         </div>
                         <div id="formulaire-comment">
                             <form id="form-comment" enctype="multipart/form-data">
-                                <label :for="'commenting post number' + post.id">Commentaire : </label>
-                                <textarea name="comment" :id="'commenting post number' + post.id" cols="30" rows="3" v-model="comment" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !comment }"></textarea>
-                                <div v-show="submitted && !comment">Un commentaire est requis</div>
+                                <label for="message">Commentaire : </label>
+                                <textarea name="comment" id="message" cols="30" rows="3" v-model="message" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !message }"></textarea>
+                                <div v-show="submitted && !message">Un commentaire est requis</div>
                                 <input type="submit" @click.prevent="addComment(post.id)">
                             </form>
                         </div>
@@ -102,7 +102,7 @@ export default {
             file: null,
             posts: [],
             submitted: false,
-            comment: "",
+            message: "",
             comments: []
 
         }
@@ -168,7 +168,7 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.comment }, { headers: { "Authorization": localStorage.getItem("token")}})
+            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.message }, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 Swal.fire({
                     text: "Commentaire ajouté !",
