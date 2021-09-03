@@ -26,10 +26,12 @@
                     <img v-if="post.User.avatar" :src="post.User.avatar" alt="avatar utilisateur" height="40">
                     <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
                     <span> Posté par {{ post.User.first_name + " " + post.User.last_name }} </span> {{ post.id }}
+                    <div v-if="post.User.id == this.userId || this.is_admin == 'true'">
+                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)">
+                        <i class="fas fa-edit"></i> Éditer le post <br>
+                        <i class="fas fa-trash-alt"></i> Supprimer le post
+                    </router-link>
                 </div>
-                <div v-if="post.User.id == this.userId || this.is_admin == 'true'">
-                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-edit"></i> Éditer le post</router-link>
-                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</router-link>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
