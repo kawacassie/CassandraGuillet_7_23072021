@@ -23,13 +23,17 @@
         <div v-for="post in posts" :key="post.id" class="allposts">
             <div class="posts">
                 <div class="post-header">
-                    <img v-if="post.User.avatar" :src="post.User.avatar" alt="avatar utilisateur" height="40">
-                    <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
-                    <span> Posté par {{ post.User.first_name + " " + post.User.last_name }} </span> {{ post.id }}
+                    <div class="img-name, s-size">
+                        <img v-if="post.User.avatar" :src="post.User.avatar" alt="avatar utilisateur" height="40">
+                        <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
+                        <div class="post-name"> Posté par {{ post.User.first_name + " " + post.User.last_name }} </div>
+                    </div>
+                    <div id="edit-delete" class="s-size" v-if="post.User.id == this.userId || this.is_admin == 'true'">
+                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)">
+                        <i class="fas fa-edit"></i> Éditer le post <br>
+                        <i class="fas fa-trash-alt"></i> Supprimer le post
+                    </router-link>
                 </div>
-                <div v-if="post.User.id == this.userId || this.is_admin == 'true'">
-                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-edit"></i> Éditer le post</router-link>
-                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)"><i class="fas fa-trash-alt"></i> Supprimer le post</router-link>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -39,17 +43,21 @@
                 <!-- PARTIE COMMENTAIRES --> 
                 <div class="post-footer">
                     <div>
-                        <p v-if="post.Comments.length === 0">Il n'y a aucun commentaire.</p>
-                        <p v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
-                        <p v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
+                        <p class="s-size" v-if="post.Comments.length === 0">Il n'y a aucun commentaire.</p>
+                        <p class="s-size" v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
+                        <p class="s-size" v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
 
-                        <h4>Poster un commentaire : </h4>
-                        <form enctype="multipart/form-data">
-                            <label :for="'commenting post number' + post.id">Commentaire : </label>
-                            <textarea name="comment" :id="'commenting post number' + post.id" cols="30" rows="5" v-model="comment" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !comment }"></textarea>
-                            <div v-show="submitted && !comment">Un commentaire est requis</div>
-                            <input type="submit" @click.prevent="addComment(post.id)">
-                        </form>
+                        <div class="space">
+                            <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                        </div>
+                        <div id="formulaire-comment">
+                            <form id="form-comment" enctype="multipart/form-data">
+                                <label for="message">Commentaire : </label>
+                                <textarea name="comment" id="message" cols="30" rows="3" v-model="message" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !message }"></textarea>
+                                <div v-show="submitted && !message">Un commentaire est requis</div>
+                                <input type="submit" @click.prevent="addComment(post.id)">
+                            </form>
+                        </div>
 
                         <div v-for="comment in comments" :key="comment.id">
                             <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
@@ -94,7 +102,7 @@ export default {
             file: null,
             posts: [],
             submitted: false,
-            comment: "",
+            message: "",
             comments: []
 
         }
@@ -160,7 +168,7 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.comment }, { headers: { "Authorization": localStorage.getItem("token")}})
+            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.message }, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 Swal.fire({
                     text: "Commentaire ajouté !",

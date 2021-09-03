@@ -1,23 +1,29 @@
 <template>
     <main>
         <div class="container">
-            <h2>Modifier le post : </h2>
-            <form method="POST" enctype="multipart/form-data" class="form-group">
-                <label for="title">Nouveau titre : </label>
-                <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le nouveau titre de votre post ici..."></textarea>
-                <label for="newPost">Nouveau contenu du post : </label>
-                <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre nouveau texte ici..."></textarea>
-                <label for="File">Choisir une nouvelle image : </label>
-                <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
-                <div class="form-footer">
-                    <input type="reset">
-                    <input type="submit" @click.prevent="modifyPost()">
-                </div>
-            </form>
+            <div>
+                <a id="lien-edit-post" @click="masquerDiv('edit-post')"><i class="fas fa-edit"></i> Modifier le post ?</a>
+            </div>
+            <div id="edit-post">
+                <form method="POST" enctype="multipart/form-data" class="form-group">
+                    <label for="title">Nouveau titre : </label>
+                    <textarea name="title" id="title" v-model="title" cols="50" rows="2" placeholder="Le nouveau titre de votre post ici..."></textarea>
+                    <label for="newPost">Nouveau contenu du post : </label>
+                    <textarea name="newPost" id="newPost" v-model="content" cols="50" rows="10" placeholder="Écrivez votre nouveau texte ici..."></textarea>
+                    <label for="File">Choisir une nouvelle image : </label>
+                    <input @change="onFileChange()" type="file" ref="file" name="image_url" id="file" accept=".jpg, .jpeg, .gif, .png, .webp">
+                    <div class="form-footer">
+                        <input type="reset">
+                        <input type="submit" @click.prevent="modifyPost()">
+                    </div>
+                </form>
+            </div>
 
+            <div>
+                <a id="lien-delete-post" @click="masquerDiv('delete-post')"><i class="fas fa-trash-alt"></i> Supprimer le post ?</a>
+            </div>
             <div id="delete-post">
                 <form enctype="multipart/form-data">
-                    <p><i class="fas fa-trash-alt"></i> Supprimer le post ?</p>
                     <p>ATTENTION ! Cette action est irréversible !</p>
                     <p>Êtes-vous certain de vouloir supprimer ce post ?</p>
                     <button type="submit" @click.prevent="deletePost()">Je supprime !</button>
@@ -53,6 +59,15 @@ export default {
         onFileChange(){
             this.file = this.$refs.file.files[0];
             this.image_url = URL.createObjectURL(this.file)
+        },
+        masquerDiv(id) {
+            if (document.getElementById(id).style.display =='block') 
+            {
+                document.getElementById(id).style.display = 'none';
+            }
+            else {
+                document.getElementById(id).style.display = 'block';
+            }
         },
         modifyPost() {
             this.submitted = true
