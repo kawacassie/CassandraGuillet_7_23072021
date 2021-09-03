@@ -5,17 +5,16 @@
             <img v-else src="../assets/default-avatar.png" alt="Avatar par défaut" height="40">
             <span id="user_name">{{ first_name + " " + last_name }}</span>
         </div>
-        <div>
-            <ul id="nav_deroulant">
-                <li><a href="#"><i class="fas fa-bars"></i></a>
-                    <ul id="nav_user">
-                        <li><router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link></li>
-                        <li><router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link></li>
-                        <li><router-link to='/posts'><i class="fas fa-comments"></i> Voir les posts</router-link></li>
-                        <li><a @click="deconnexion" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="logo_nav">
+            <a id="masque_nav" @click="masquerDiv('nav_hidden')"><i class="fas fa-bars"></i> Voir plus</a>
+            <div id="nav_hidden">
+                <ul id="nav_user">
+                    <li><router-link to='/accounts'><i class="fas fa-users"></i> Tous les utilisateurs</router-link></li>
+                    <li><router-link to='/accounts/:id'><i class="fas fa-user-edit"></i> Mon compte</router-link></li>
+                    <li><router-link to='/posts'><i class="fas fa-comments"></i> Voir les posts</router-link></li>
+                    <li><a @click="deconnexion" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -38,6 +37,15 @@ export default {
         this.avatar = localStorage.getItem("avatar")
     },
     methods: {
+        masquerDiv(id) {
+            if (document.getElementById(id).style.display =='block') 
+            {
+                document.getElementById(id).style.display = 'none';
+            }
+            else {
+                document.getElementById(id).style.display = 'block';
+            }
+        },
         deconnexion: function() {
             localStorage.clear()
             Swal.fire({
