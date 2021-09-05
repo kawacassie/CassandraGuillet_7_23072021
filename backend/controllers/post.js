@@ -192,9 +192,9 @@ exports.likeOrDislike = (req, res, next) => {
 // Ajout d'un commentaire
 exports.addComment = async (req, res) => {
   try {
-    const comment = req.body.commentMessage;
+    const message = req.body.commentMessage;
     const newComment = await database.Comment.create({
-      message: comment,
+      message: message,
       UserId: token.getUserId(req),
       PostId: req.params.id,
     });

@@ -53,7 +53,7 @@
                         <div id="formulaire-comment">
                             <form id="form-comment" enctype="multipart/form-data">
                                 <label for="message">Commentaire : </label>
-                                <textarea name="comment" id="message" cols="30" rows="3" v-model="message" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !message }"></textarea>
+                                <textarea name="message" id="message" cols="30" rows="3" v-model="message" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !message }"></textarea>
                                 <div v-show="submitted && !message">Un commentaire est requis</div>
                                 <input type="submit" @click.prevent="addComment(post.id)">
                             </form>
@@ -67,6 +67,16 @@
                     </div>
 
                     <!-- AJOUTER LIKES ICI -->
+                    <div class="like-buttons">
+                        <div class="likes">
+                            <i class="fas fa-thumbs-up" @click.prevent="onLike(post.id)"></i>
+                            <span>{{ post.likes }}</span>
+                        </div>
+                        <div class="dislikes">
+                            <i class="fas fa-thumbs-down" @click.prevent="onDislike(post.id)"></i>
+                            <span>{{ post.dislikes }}</span>
+                        </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -103,7 +113,9 @@ export default {
             posts: [],
             submitted: false,
             message: "",
-            comments: []
+            comments: [],
+            liked: false,
+            disliked: false,
 
         }
     },
@@ -168,8 +180,15 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.message }, { headers: { "Authorization": localStorage.getItem("token")}})
+            const formData = new FormData()
+            formData.set("PostId", this.id.toString())
+            formData.set("UserId", this.userId.toString())
+            formData.set("message", this.message.toString())
+            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
+                this.userId = ""
+                this.id = ""
+                this.message = ""
                 Swal.fire({
                     text: "Commentaire ajouté !",
                     footer: "Redirection en cours...",
@@ -196,6 +215,38 @@ export default {
                     timerProgressBar: true
                 })  
             })
+        },
+          onLike(id) {
+            this.id = id
+            if (this.disliked) { 
+                return 0;
+            }
+            this.posts.likePost(this.id, !this.liked).then(
+            (liked = true) => {
+                this.liked = liked;
+                if (liked) {
+                this.post.likes++;
+                } else {
+                this.post.likes--;
+                }
+            }
+            );
+        },
+        onDislike(id) {
+            this.id = id
+            if (this.liked) { 
+                return 0;
+            }
+            this.posts.dislikePost(this.id, !this.disliked).then(
+            (disliked = true) => {
+                this.disliked = disliked;
+                if (disliked) {
+                this.post.dislikes++;
+                } else {
+                this.post.dislikes--;
+                }
+            }
+            );
         }
     },
     created: function() {
