@@ -168,8 +168,15 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            axios.post("http://localhost:3000/api/posts/:id/comments", { "PostId" : this.id, "UserId": this.userId, "comment": this.message }, { headers: { "Authorization": localStorage.getItem("token")}})
+            const formData = new FormData()
+            formData.set("PostId", this.id.toString())
+            formData.set("UserId", this.userId.toString())
+            formData.set("message", this.message.toString())
+            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
+                this.userId = ""
+                this.id = ""
+                this.message = ""
                 Swal.fire({
                     text: "Commentaire ajouté !",
                     footer: "Redirection en cours...",
