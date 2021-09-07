@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 07 sep. 2021 à 14:11
+-- Généré le : mar. 07 sep. 2021 à 14:46
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -79,7 +79,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updatedAt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `avatar`, `bio`, `is_admin`, `createdAt`, `updatedAt`) VALUES
+(30, 'Admin', 'Is admin', 'admin@mail.com', '$2b$10$zAPXl9nAgP/6qKYrZCAm/uWY.Hx3hLEYBJwSB9.pnTRs9/eHBmZdy', NULL, NULL, 1, '2021-09-07 14:16:41', '2021-09-07 14:16:41'),
+(31, 'Daenerys', 'Targaryen', 'dani@mail.com', '$2b$10$mY/ntCgloR.3F7SW6.iKJ.ZHxHDMOY0NUqFxbjTMV1QCyazrlgWt2', NULL, NULL, 0, '2021-09-07 14:41:07', '2021-09-07 14:41:07');
 
 --
 -- Contraintes pour les tables déchargées
