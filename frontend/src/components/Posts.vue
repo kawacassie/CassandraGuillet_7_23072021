@@ -59,7 +59,7 @@
                             </form>
                         </div>
 
-                        <div v-for="comment in comments" :key="comment.id">
+                        <div v-for="comment in post.Comments" :key="comment.id">
                             <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
                             <p>{{ comment.message }}</p>
                             <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
