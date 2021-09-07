@@ -61,7 +61,7 @@
 
                         <div v-for="comment in comments" :key="comment.id">
                             <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
-                            <p>{{ comment.comment }}</p>
+                            <p>{{ comment.message }}</p>
                             <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
                         </div>
                     </div>
@@ -169,7 +169,7 @@ export default {
             formData.set("PostId", this.id.toString())
             formData.set("UserId", this.userId.toString())
             formData.set("message", this.message.toString())
-            axios.post("http://localhost:3000/api/posts/:id/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            axios.post("http://localhost:3000/api/posts/" + id + "/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 this.userId = ""
                 this.id = ""

@@ -1,13 +1,14 @@
 const token = require('../middleware/token');
 const database = require('../models');
 const fs = require('fs');
+const Comment = require('../models/comment')
 
 // Récupérer toutes les posts enregistrés
 
 exports.getAllPosts = async (req, res) => {
   try {
     const posts = await database.Post.findAll({
-      attributes: ["id", "title", "content", "image_url", "createdAt", "likes", "dislikes"],
+      attributes: ["id", "title", "content", "image_url", "createdAt"],
       order: [["id", "DESC"]],
       include: [
         {
@@ -163,15 +164,43 @@ exports.deletePost = async (req, res) => {
 };
 
 // Ajout d'un commentaire
-exports.addComment = async (req, res) => {
+/* exports.addComment = async (req, res) => {
   try {
-    const message = req.body.commentMessage;
+    const message = req.body.message;
     const newComment = await database.Comment.create({
       message: message,
       UserId: token.getUserId(req),
       PostId: req.params.id,
     });
     res.status(201).json({ newComment, messageRetour: "Commentaire ajouté" });
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" + error });
+  }
+}; */
+
+exports.addComment = async (req, res) => {
+  const UserId = token.getUserId(req);
+  try {
+    const user = await database.User.findOne({
+      attributes: ["first_name", "last_name", "id", "avatar"],
+      where: { id: UserId },
+    });
+    if (user !== null) {
+      const message = await database.Comment.create({
+        include: [
+          {
+            model: database.User,
+            attributes: ["first_name", "last_name", "avatar", "id"],
+          },
+        ],
+        message: req.body.message,
+        UserId: UserId,
+        PostId: req.params.id,
+      });
+      res.status(201).json({ post: message, messageRetour: "Commentaire enregistré" });
+    } else {
+      res.status(400).send({ error: "Erreur " + error});
+    }
   } catch (error) {
     return res.status(500).send({ error: "Erreur serveur" + error });
   }
