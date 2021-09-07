@@ -47,9 +47,15 @@
                         <p class="s-size" v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
                         <p class="s-size" v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
 
-                        <div class="space">
-                            <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                        <div id="liens-commentaires">
+                            <div class="space">
+                                <a id="lien-all-comments" @click="masquerDiv('all-comments')"><i class="far fa-comment-dots"></i> Voir les commentaires</a>  
+                            </div>
+                            <div class="space">
+                                <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                            </div>
                         </div>
+                       
                         <div id="formulaire-comment">
                             <form id="form-comment" enctype="multipart/form-data">
                                 <label for="message">Commentaire : </label>
@@ -59,10 +65,14 @@
                             </form>
                         </div>
 
-                        <div v-for="comment in post.Comments" :key="comment.id">
-                            <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
-                            <p>{{ comment.message }}</p>
-                            <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
+                        <div id="all-comments">
+                            <div v-for="comment in post.Comments" :key="comment.id" class="comment">
+                                <div class="comment-card">
+                                    <span>{{ comment.User.first_name + " " + comment.User.last_name + " :" }}</span>
+                                    <p>{{ comment.message }}</p>
+                                <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -274,13 +274,33 @@ a, i {
     font-weight: bold;
 }
 
+#all-comments {
+    margin-top: 0em;
+    margin-bottom: 2em;
+}
+
+.comment {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.comment-card {
+    box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
+    background-color: white;
+    font-size: 0.7em;
+    width: 70%;
+    padding: 1em;
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
+}
+
 #form-comment {
     display: flex;
     flex-direction: column;
     margin-bottom: 1em;
 }
 
-#lien-formulaire-avatar, #lien-formulaire-bio, #lien-delete-account, #lien-formulaire-post, #lien-edit-post, #lien-delete-post, #lien-formulaire-comment {
+#lien-formulaire-avatar, #lien-formulaire-bio, #lien-delete-account, #lien-formulaire-post, #lien-edit-post, #lien-delete-post, #lien-formulaire-comment, #lien-all-comments {
     width: 95%;
     background-color: #FFD7D7;
     margin-top: 1em;
@@ -290,7 +310,11 @@ a, i {
     box-shadow: 0.2em 0.2em 0.5em grey;  
 }
 
-#lien-formulaire-avatar, #lien-formulaire-comment {
+#lien-formulaire-comment, #lien-all-comments {
+    font-size: 0.6em;
+}
+
+#lien-formulaire-avatar {
     font-size: 0.8em;
 }
 
@@ -302,7 +326,7 @@ a, i {
     font-size: 1.2em;
 }
 
-#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover, #lien-edit-post:hover, #lien-delete-post:hover, #lien-formulaire-comment:hover {
+#lien-formulaire-avatar:hover, #lien-formulaire-bio:hover, #lien-delete-account:hover, #lien-formulaire-post:hover, #lien-edit-post:hover, #lien-delete-post:hover, #lien-formulaire-comment:hover, #lien-all-comments:hover {
     opacity: 70%;
 	transition: .3s ease-in-out;
     cursor: pointer;
@@ -313,7 +337,7 @@ a, i {
     font-size: 0.9em;
 }
 
-#delete-account, #formulaire-post, #edit-post, #delete-post {
+#delete-account, #formulaire-post, #edit-post, #delete-post, #all-comments {
     display: none;
 }
 
@@ -376,6 +400,16 @@ footer a {
         width: 90%;
     }
 
+    #liens-commentaires {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .comment-card {
+        width: 80%;
+    }
+
     #bio {
         width: 100%;
     }
@@ -388,7 +422,6 @@ footer a {
         flex-direction: row;
         justify-content: space-between;
     }
-    
 
     .post-body img {
         width: 70%;
