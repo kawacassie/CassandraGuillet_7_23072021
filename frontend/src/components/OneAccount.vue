@@ -157,6 +157,7 @@ export default {
             })
         },
         deleteAccount() {
+            if (confirm("La suppression d'un compte est irréversible, voulez vous continuer ?"))
             axios.delete('http://localhost:3000/api/users/accounts/' + localStorage.getItem("userId"), { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(() => {
                 localStorage.clear()

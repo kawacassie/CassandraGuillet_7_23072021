@@ -107,6 +107,7 @@ export default {
             })
         },
         deletePost() {
+            if (confirm("La suppression d'un post est irréversible, voulez vous continuer ?"))
             axios.delete('http://localhost:3000/api/posts/' + localStorage.getItem("PostId"), { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(response => {
                 if (response.status === 200) { 

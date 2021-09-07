@@ -289,9 +289,27 @@ a, i {
     box-shadow: 4px 6px 8px 8px rgba(0,0,0,0.4);
     background-color: white;
     font-size: 0.7em;
-    width: 70%;
+    width: 80%;
     padding: 1em;
     border-radius: 1.5em 1.5em 1.5em 1.5em;
+}
+
+.comment-title {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-name-delete {
+    margin: 0;
+}
+
+.comment-name-delete a {
+    font-size: 0.8em;
+}
+ 
+.comment-name-delete a:hover {
+    cursor: pointer;
 }
 
 #form-comment {
