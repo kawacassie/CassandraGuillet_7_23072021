@@ -11,8 +11,8 @@ function createAdmin(req, res) {
                     .hash('Moderateur', 10)
                     .then((hash) => {
                         const admin = database.User.create({
-                            first_name: 'admin',
-                            last_name: 'admin',
+                            first_name: 'Admin',
+                            last_name: 'Is admin',
                             email: 'admin@mail.com',
                             password: hash, 
                             is_admin: true,
