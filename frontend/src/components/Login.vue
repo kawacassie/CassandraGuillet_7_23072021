@@ -6,12 +6,12 @@
             <div class="form-group">
                 <label for="InputEmail">Adresse e-mail :</label>
                 <input type="email" v-model="InputEmail" name="InputEmail" class="form-control" id="InputEmail" placeholder="Adresse e-mail" :class="{ 'is-invalid': submitted && !InputEmail }">
-                <div v-show="submitted && !InputEmail" class="invalid-feedback">Une adresse e-mail est requise</div>
+                <div v-show="submitted && !InputEmail" class="invalid-feedback"><i class="fas fa-exclamation"></i> Une adresse e-mail est requise <i class="fas fa-exclamation"></i></div>
             </div>
             <div class="form-group">
                 <label for="InputPassword">Mot de passe :</label>
                 <input type="password" v-model="InputPassword" name="InputPassword" class="form-control" id="InputPassword" placeholder="Mot de passe" :class="{ 'is-invalid': submitted && !InputPassword }">
-                <div v-show="submitted && !InputPassword" class="invalid-feedback">Un mot de passe est requis</div>
+                <div v-show="submitted && !InputPassword" class="invalid-feedback"><i class="fas fa-exclamation"></i> Un mot de passe est requis <i class="fas fa-exclamation"></i></div>
             </div>
             <button>Se connecter</button>
         </form>
