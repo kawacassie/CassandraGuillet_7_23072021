@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 03 sep. 2021 à 17:48
+-- Généré le : mar. 07 sep. 2021 à 08:05
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -54,10 +54,6 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `image_url` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `likes` smallint DEFAULT '0',
-  `dislikes` smallint DEFAULT '0',
-  `usersLiked` int DEFAULT NULL,
-  `usersDisliked` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`UserId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
@@ -66,11 +62,11 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- Déchargement des données de la table `posts`
 --
 
-INSERT INTO `posts` (`id`, `UserId`, `title`, `content`, `image_url`, `createdAt`, `updatedAt`, `likes`, `dislikes`, `usersLiked`, `usersDisliked`) VALUES
-(4, 24, 'Exemple Titre 1', 'Contenu exemple 1 (post sans image)', NULL, '0000-00-00 00:00:00', '2021-08-28 18:39:33', 0, 0, NULL, NULL),
-(5, 23, 'Exemple 2', 'Toujours sans image ', NULL, '0000-00-00 00:00:00', '2021-08-29 09:56:45', 0, 0, NULL, NULL),
-(6, 23, 'Essai Image', 'Essai image contenu', 'http://localhost:3000/images/Pomme_empoisonnee.jpg1630231778512.jpg', '0000-00-00 00:00:00', '2021-08-29 10:09:38', 0, 0, NULL, NULL),
-(8, 29, 'Créer un post', 'Tester suppression post', 'http://localhost:3000/images/Banc_des_amoureux.jpg1630582886658.jpg', '0000-00-00 00:00:00', '2021-09-02 11:41:26', 0, 0, NULL, NULL);
+INSERT INTO `posts` (`id`, `UserId`, `title`, `content`, `image_url`, `createdAt`, `updatedAt`) VALUES
+(4, 24, 'Exemple Titre 1', 'Contenu exemple 1 (post sans image)', NULL, '0000-00-00 00:00:00', '2021-08-28 18:39:33'),
+(5, 23, 'Exemple 2', 'Toujours sans image ', NULL, '0000-00-00 00:00:00', '2021-08-29 09:56:45'),
+(6, 23, 'Essai Image', 'Essai image contenu', 'http://localhost:3000/images/Pomme_empoisonnee.jpg1630231778512.jpg', '0000-00-00 00:00:00', '2021-08-29 10:09:38'),
+(8, 29, 'Créer un post', 'Tester suppression post', 'http://localhost:3000/images/Banc_des_amoureux.jpg1630582886658.jpg', '0000-00-00 00:00:00', '2021-09-02 11:41:26');
 
 -- --------------------------------------------------------
 
