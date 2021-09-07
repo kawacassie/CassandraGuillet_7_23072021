@@ -14,10 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         content: { type: DataTypes.TEXT, allowNull: false},
         image_url: { type: DataTypes.STRING, allowNull: true},
         createdAt: { type: Sequelize.JSON, allowNull: false},
-        likes: { type: DataTypes.INTEGER, allowNull: true, default: 0},
-        dislikes: { type: DataTypes.INTEGER, allowNull: true, default: 0 },
-        usersLiked: { type: DataTypes.INTEGER },
-        usersDisliked: { type: DataTypes.INTEGER }
     },
     {
         sequelize,
