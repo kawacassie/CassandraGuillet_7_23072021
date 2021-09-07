@@ -1,6 +1,7 @@
 <template>
     <main>
         <div class="container">
+            <!-- MODIFIER LE POST -->
             <div>
                 <a id="lien-edit-post" @click="masquerDiv('edit-post')"><i class="fas fa-edit"></i> Modifier le post ?</a>
             </div>
@@ -19,6 +20,7 @@
                 </form>
             </div>
 
+            <!-- SUPPRIMER LE POST -->
             <div>
                 <a id="lien-delete-post" @click="masquerDiv('delete-post')"><i class="fas fa-trash-alt"></i> Supprimer le post ?</a>
             </div>
@@ -30,6 +32,7 @@
                 </form>
             </div>
 
+            <!-- RETOUR AUX POSTS -->
             <div id="retour-posts">
                 <router-link to="/posts"><i class="fas fa-undo-alt"></i> Retour</router-link>
             </div>
@@ -107,6 +110,7 @@ export default {
             })
         },
         deletePost() {
+            if (confirm("La suppression d'un post est irréversible, voulez vous continuer ?"))
             axios.delete('http://localhost:3000/api/posts/' + localStorage.getItem("PostId"), { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(response => {
                 if (response.status === 200) { 

@@ -1,6 +1,7 @@
 <template>
     <main>
         <div class="container-account">
+            <!--PARTIE NOM/PRENOM CHANGER AVATAR -->
             <div class="one-card">
                 <div class="one-title">
                     <p class="card-info">{{ first_name + " " + last_name }}</p>
@@ -24,6 +25,7 @@
                     </div>
                 </div>
                 <div class="one-body">
+                    <!-- PARTIE INFOS CHANGER BIO -->
                     <p class="card-info">Informations :</p>
                     <p>{{ email }}</p>
                     <p>{{ bio }}</p>
@@ -42,6 +44,7 @@
                     </div>
                 </div>
             </div>
+            <!-- SUPPRESSION DU COMPTE UTILISATEUR -->
             <div>
                 <a id="lien-delete-account" @click="masquerDiv('delete-account')"><i class="fas fa-trash-alt"></i> Supprimer mon compte ?</a>
             </div>
@@ -157,6 +160,7 @@ export default {
             })
         },
         deleteAccount() {
+            if (confirm("La suppression d'un compte est irréversible, voulez vous continuer ?"))
             axios.delete('http://localhost:3000/api/users/accounts/' + localStorage.getItem("userId"), { headers : { "Authorization" : localStorage.getItem("token")} })
             .then(() => {
                 localStorage.clear()

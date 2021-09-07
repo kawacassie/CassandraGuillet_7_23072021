@@ -164,20 +164,6 @@ exports.deletePost = async (req, res) => {
 };
 
 // Ajout d'un commentaire
-/* exports.addComment = async (req, res) => {
-  try {
-    const message = req.body.message;
-    const newComment = await database.Comment.create({
-      message: message,
-      UserId: token.getUserId(req),
-      PostId: req.params.id,
-    });
-    res.status(201).json({ newComment, messageRetour: "Commentaire ajouté" });
-  } catch (error) {
-    return res.status(500).send({ error: "Erreur serveur" + error });
-  }
-}; */
-
 exports.addComment = async (req, res) => {
   const UserId = token.getUserId(req);
   try {

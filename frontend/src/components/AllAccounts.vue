@@ -1,4 +1,5 @@
 <template>
+<!-- AFFICHER TOUS LES COMPTES UTILISATEURS --> 
     <main class="cards-container">
         <div v-for="user of users" :key="user.id" :user="user" class="all-cards">
             <div class="cards-title">

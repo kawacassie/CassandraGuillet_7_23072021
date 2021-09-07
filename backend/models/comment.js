@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         PostId: { type: DataTypes.STRING, allowNull: false},
         message: { type: DataTypes.STRING, allowNull: false},
         createdAt: { type: Sequelize.JSON, allowNull: false},
+        updatedAt: { type: Sequelize.JSON, allowNull: false},
     },
     {
         sequelize,

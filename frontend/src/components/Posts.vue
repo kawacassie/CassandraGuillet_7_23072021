@@ -29,11 +29,11 @@
                         <div class="post-name"> Posté par {{ post.User.first_name + " " + post.User.last_name }} </div>
                     </div>
                     <div id="edit-delete" class="s-size" v-if="post.User.id == this.userId || this.is_admin == 'true'">
-                    <router-link to="/posts/:id" @click.prevent="getPostId(post.id)">
-                        <i class="fas fa-edit"></i> Éditer le post <br>
-                        <i class="fas fa-trash-alt"></i> Supprimer le post
-                    </router-link>
-                </div>
+                        <router-link to="/posts/:id" @click.prevent="getPostId(post.id)">
+                            <i class="fas fa-edit"></i> Éditer le post <br>
+                            <i class="fas fa-trash-alt"></i> Supprimer le post
+                        </router-link>
+                    </div>
                 </div>
                 <div class="post-body">
                     <h3>{{ post.title }}</h3>
@@ -47,9 +47,15 @@
                         <p class="s-size" v-if="post.Comments.length === 1">Il y a 1 commentaire.</p>
                         <p class="s-size" v-if="post.Comments.length > 1">Il y a {{post.Comments.length}} commentaires.</p>
 
-                        <div class="space">
-                            <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                        <div id="liens-commentaires">
+                            <div class="space" v-if="post.Comments.length > 0">
+                                <a id="lien-all-comments" @click="masquerDiv('all-comments')"><i class="far fa-comment-dots"></i> Voir les commentaires</a>  
+                            </div>
+                            <div class="space">
+                                <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                            </div>
                         </div>
+                       
                         <div id="formulaire-comment">
                             <form id="form-comment" enctype="multipart/form-data">
                                 <label for="message">Commentaire : </label>
@@ -59,10 +65,19 @@
                             </form>
                         </div>
 
-                        <div v-for="comment in comments" :key="comment.id">
-                            <span>Commentaire de {{ comment.User.first_name + " " + comment.User.last_name }}</span>
-                            <p>{{ comment.message }}</p>
-                            <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
+                        <div id="all-comments">
+                            <div v-for="comment in post.Comments" :key="comment.id" class="comment">
+                                <div class="comment-card">
+                                    <div class="comment-title">
+                                        <span class="comment-name-delete">{{ comment.User.first_name + " " + comment.User.last_name + " :" }}</span>
+                                        <div id="delete-comment" class="s-size, comment-name-delete" v-if="comment.UserId == this.userId || this.is_admin == 'true'">
+                                            <a @click.prevent="deleteComment(comment.id)"><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <p>{{ comment.message }}</p>
+                                <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,11 +180,10 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            const formData = new FormData()
-            formData.set("PostId", this.id.toString())
-            formData.set("UserId", this.userId.toString())
-            formData.set("message", this.message.toString())
-            axios.post("http://localhost:3000/api/posts/" + id + "/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            const PostId = this.id
+            const UserId = this.userId
+            const message = this.message
+            axios.post("http://localhost:3000/api/posts/" + id + "/comments", { PostId: PostId, UserId: UserId, message: message }, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 this.userId = ""
                 this.id = ""
@@ -199,6 +213,40 @@ export default {
                     showConfirmButton: false,
                     timerProgressBar: true
                 })  
+            })
+        },
+        deleteComment(id) {
+            this.id = id
+            if (confirm("La suppression d'un commentaire est irréversible, voulez vous continuer ?"))
+            axios.delete('http://localhost:3000/api/posts/comments/' + id , { headers : { "Authorization" : localStorage.getItem("token")} })
+            .then(response => {
+                if (response.status === 200) { 
+                    Swal.fire({
+                        text: "Le commentaire a été supprimé",
+                        footer: "Déconnexion en cours...",
+                        icon: "success",
+                        timer: 4000,
+                        showConfirmButton: false, 
+                        timerProgressBar: true, 
+                        willClose: () => { location.reload() }
+                    })
+                }
+            })
+            .catch(function(error) {
+                const codeError = error.message.split("code ")[1]
+                let messageError = ""
+                switch (codeError) {
+                    case "400" : messageError = "La suppression du commentaire n'a pas aboutie"; break
+                    case "401" : messageError = "Requête non-authentifiée"; break
+                }
+                Swal.fire({
+                    title: "Une erreur est survenue",
+                    text: messageError || error.message,
+                    icon: "error",
+                    timer: 1500,
+                    showConfirmButton: false, 
+                    timerProgressBar: true
+                })
             })
         },
     },
