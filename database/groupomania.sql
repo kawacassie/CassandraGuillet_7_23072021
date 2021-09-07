@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 07 sep. 2021 à 08:05
+-- Généré le : mar. 07 sep. 2021 à 11:32
 -- Version du serveur :  8.0.21
 -- Version de PHP : 7.3.21
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `UserId` int UNSIGNED NOT NULL,
   `message` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`UserId`),
   KEY `post_id` (`PostId`)

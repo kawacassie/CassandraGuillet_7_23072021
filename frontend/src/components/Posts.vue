@@ -165,11 +165,10 @@ export default {
         addComment(id) {
             this.submitted = true
             this.id = id
-            const formData = new FormData()
-            formData.set("PostId", this.id.toString())
-            formData.set("UserId", this.userId.toString())
-            formData.set("message", this.message.toString())
-            axios.post("http://localhost:3000/api/posts/" + id + "/comments", formData, { headers: { "Authorization": localStorage.getItem("token")}})
+            const PostId = this.id
+            const UserId = this.userId
+            const message = this.message
+            axios.post("http://localhost:3000/api/posts/" + id + "/comments", { PostId: PostId, UserId: UserId, message: message }, { headers: { "Authorization": localStorage.getItem("token")}})
             .then(()=> {
                 this.userId = ""
                 this.id = ""
