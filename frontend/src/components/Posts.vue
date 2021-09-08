@@ -49,14 +49,14 @@
 
                         <div id="liens-commentaires">
                             <div class="space" v-if="post.Comments.length > 0">
-                                <a id="lien-all-comments" @click="masquerDiv('all-comments')"><i class="far fa-comment-dots"></i> Voir les commentaires</a>  
+                                <a id="lien-all-comments" @click="masquerDivComments('all-comments')"><i class="far fa-comment-dots"></i> Voir les commentaires</a>  
                             </div>
                             <div class="space">
-                                <a id="lien-formulaire-comment" @click="masquerDiv('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
+                                <a id="lien-formulaire-comment" @click="masquerDivCommentForm('formulaire-comment')"><i class="fas fa-plus"></i> Ajouter un commentaire</a> 
                             </div>
                         </div>
                        
-                        <div id="formulaire-comment">
+                        <div class="formulaire-comment">
                             <form id="form-comment" enctype="multipart/form-data">
                                 <label for="message">Commentaire : </label>
                                 <textarea name="message" id="message" cols="30" rows="3" v-model="message" placeholder="Votre commentaire ici..." required :class="{ 'is-invalid': submitted && !message }"></textarea>
@@ -65,7 +65,7 @@
                             </form>
                         </div>
 
-                        <div id="all-comments">
+                        <div class="all-comments">
                             <div v-for="comment in post.Comments" :key="comment.id" class="comment">
                                 <div class="comment-card">
                                     <div class="comment-title">
@@ -75,7 +75,6 @@
                                         </div>
                                     </div>
                                     <p>{{ comment.message }}</p>
-                                <!-- AJOUTER SUPPRESSION COMMENTAIRE -->
                                 </div>
                             </div>
                         </div>
@@ -131,6 +130,30 @@ export default {
             }
             else {
                 document.getElementById(id).style.display = 'block';
+            }
+        },
+        masquerDivComments() {
+            var a = document.getElementsByClassName("all-comments");
+            for (let i=0; i<a.length; i++) {
+                if (a[i].style.display =='block') 
+                {
+                    a[i].style.display = 'none';
+                }
+                else {
+                    a[i].style.display = 'block';
+                } 
+            }
+        },
+        masquerDivCommentForm() {
+            var a = document.getElementsByClassName("formulaire-comment");
+            for (let i=0; i<a.length; i++) {
+                if (a[i].style.display =='block') 
+                {
+                    a[i].style.display = 'none';
+                }
+                else {
+                    a[i].style.display = 'block';
+                } 
             }
         },
         createPost(){
