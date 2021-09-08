@@ -274,7 +274,7 @@ a, i {
     font-weight: bold;
 }
 
-#all-comments {
+.all-comments {
     margin-top: 0em;
     margin-bottom: 2em;
 }
@@ -350,12 +350,12 @@ a, i {
     cursor: pointer;
 }
 
-#formulaire-avatar, #formulaire-bio, #formulaire-comment {
+#formulaire-avatar, #formulaire-bio, .formulaire-comment {
     display: none;
     font-size: 0.9em;
 }
 
-#delete-account, #formulaire-post, #edit-post, #delete-post, #all-comments {
+#delete-account, #formulaire-post, #edit-post, #delete-post, .all-comments {
     display: none;
 }
 
@@ -414,7 +414,7 @@ footer a {
         width: 50%;
     }
 
-    #formulaire-comment textarea {
+    .formulaire-comment textarea {
         width: 90%;
     }
 
