@@ -60,7 +60,7 @@ export default {
                 let messageError = ""
                 switch (codeError){
                     case "401": messageError = "Mot de passe erroné"; break
-                    case "403": messageError = "Le compte associé à cette adresse e-mail a été supprimé"; break
+                    case "403": messageError = "Compte non trouvé"; break
                     case "404": messageError = "Utilisateur non trouvé"; break
                 }
                 Swal.fire({
